@@ -1,4 +1,4 @@
-package com.example.petadopt.animals.domain.model.organization.animal
+package com.example.petadopt.animals.domain.model.animal
 
 enum class AdoptionStatus {
     UNKNOWN,
