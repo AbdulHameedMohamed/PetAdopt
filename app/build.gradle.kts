@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    kotlin("kapt")
 }
 
 android {
@@ -45,6 +46,14 @@ dependencies {
 
     // Utils
     implementation(libs.jakewharton.threetenabp)
+
+    // Networking
+    implementation(libs.squareup.retrofit)
+    implementation(libs.retrofit.converter.moshi)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging.interceptor)
+    implementation(libs.moshi.kotlin)
+    kapt(libs.moshi.codegen)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

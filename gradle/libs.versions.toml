@@ -9,7 +9,11 @@ appcompat = "1.7.0"
 material = "1.12.0"
 activity = "1.10.1"
 constraintlayout = "2.2.1"
-threetenabp_version = '1.4.0'
+threetenabp_version = "1.4.0"
+retrofit_version = "2.9.0"
+moshi_version = "1.15.0"
+moshi_converter_version = "2.9.0"
+okHttp_version = "4.12.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -23,6 +27,14 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 
 jakewharton-threetenabp = { group = "com.jakewharton.threetenabp", name = "threetenabp", version.ref = "threetenabp_version" }
 
+squareup_retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit_version" }
+retrofit_converter_moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "moshi_converter_version" }
+
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okHttp_version" }
+okhttp_logging_interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okHttp_version" }
+
+moshi_kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi_version" }
+moshi_codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshi_version" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
