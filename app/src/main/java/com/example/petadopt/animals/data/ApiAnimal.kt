@@ -1,4 +1,4 @@
-package com.example.petadopt.animals.data.model
+package com.example.petadopt.animals.data
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
