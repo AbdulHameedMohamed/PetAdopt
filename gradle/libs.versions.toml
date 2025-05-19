@@ -9,11 +9,16 @@ appcompat = "1.7.0"
 material = "1.12.0"
 activity = "1.10.1"
 constraintlayout = "2.2.1"
+
 threetenabp_version = "1.4.0"
+
 retrofit_version = "2.9.0"
 moshi_version = "1.15.0"
 moshi_converter_version = "2.9.0"
 okHttp_version = "4.12.0"
+
+hilt_version = "2.42"
+androidx_hilt_version = '1.0.0'
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -35,6 +40,11 @@ okhttp_logging_interceptor = { group = "com.squareup.okhttp3", name = "logging-i
 
 moshi_kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi_version" }
 moshi_codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshi_version" }
+
+hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt_version" }
+hilt_android_compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt_version" }
+hilt_compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "androidx_hilt_version" }
+hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt_version" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

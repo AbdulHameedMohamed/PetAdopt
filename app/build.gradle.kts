@@ -55,6 +55,13 @@ dependencies {
     implementation(libs.moshi.kotlin)
     kapt(libs.moshi.codegen)
 
+    //DI
+    implementation(libs.hilt)
+    kapt(libs.hilt.android.compiler)
+    kapt(libs.hilt.compiler)
+    androidTestImplementation(libs.hilt.android.testing)
+    kaptAndroidTest(libs.hilt.android.compiler)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
