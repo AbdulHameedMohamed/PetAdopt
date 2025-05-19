@@ -27,7 +27,7 @@ class ApiAnimalMapper @Inject constructor(
     override fun mapToDomain(apiEntity: ApiAnimal): Animal {
         return Animal(
             id = apiEntity.id ?: throw MappingException("Animal ID cannot be null"),
-            name = apiEntity.name.orEmpty(),
+            name = apiEntity.name?: "UnKnown Name",
             type = apiEntity.type.orEmpty(),
             details = parseAnimalDetails(apiEntity),
             media = mapMedia(apiEntity),
