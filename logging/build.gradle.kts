@@ -1,15 +1,14 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    kotlin("kapt")
 }
 
 android {
-    namespace = "com.example.petadopt"
+    namespace = "com.example.logging"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.petadopt"
+        applicationId = "com.example.logging"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
@@ -41,29 +40,8 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    implementation(libs.androidx.activity)
-    implementation(libs.androidx.constraintlayout)
 
-    // Utils
-    implementation(libs.jakewharton.threetenabp)
-
-    // Networking
-    implementation(libs.squareup.retrofit)
-    implementation(libs.retrofit.converter.moshi)
-    implementation(libs.okhttp)
-    implementation(libs.okhttp.logging.interceptor)
-    implementation(libs.moshi.kotlin)
-    kapt(libs.moshi.codegen)
-
-    // Modules
-    implementation(project(":logging"))
-
-    //DI
-    implementation(libs.hilt)
-    kapt(libs.hilt.android.compiler)
-    kapt(libs.hilt.compiler)
-    androidTestImplementation(libs.hilt.android.testing)
-    kaptAndroidTest(libs.hilt.android.compiler)
+    implementation(libs.timber)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
