@@ -1,6 +1,5 @@
-package com.example.animals.domain.model.animal
+package com.example.petadopt.animals.domain.model.animal
 
-import com.example.petadopt.animals.domain.model.animal.Media
 import org.junit.Test
 import org.junit.Assert.assertEquals
 
