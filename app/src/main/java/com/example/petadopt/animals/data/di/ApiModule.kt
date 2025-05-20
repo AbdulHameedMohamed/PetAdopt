@@ -3,6 +3,8 @@ package com.example.petadopt.animals.data.di
 import com.example.petadopt.animals.data.ApiConstants
 import com.example.petadopt.animals.data.PetFinderApi
 import com.example.petadopt.animals.data.interceptor.AuthenticationInterceptor
+import com.example.petadopt.animals.data.interceptor.LoggingInterceptor
+import com.example.petadopt.animals.data.interceptor.NetworkStatusInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,12 +34,23 @@ object ApiModule {
 
     @Provides
     fun provideOkHttpClient(
+        networkStatusInterceptor: NetworkStatusInterceptor,
         httpLoggingInterceptor: HttpLoggingInterceptor,
         authenticationInterceptor: AuthenticationInterceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
+            .addInterceptor(networkStatusInterceptor)
             .addInterceptor(authenticationInterceptor)
             .addInterceptor(httpLoggingInterceptor)
             .build()
+    }
+
+    @Provides
+    fun provideHttpLoggingInterceptor(loggingInterceptor: LoggingInterceptor): HttpLoggingInterceptor {
+        val interceptor = HttpLoggingInterceptor(loggingInterceptor)
+
+        interceptor.level = HttpLoggingInterceptor.Level.BODY
+
+        return interceptor
     }
 }
