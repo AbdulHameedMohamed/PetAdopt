@@ -1,6 +1,6 @@
 package com.example.petadopt.animals.data.interceptor
 
-import com.example.logging.Logger
+import com.example.petadopt.logging.Logger
 import okhttp3.logging.HttpLoggingInterceptor
 import javax.inject.Inject
 

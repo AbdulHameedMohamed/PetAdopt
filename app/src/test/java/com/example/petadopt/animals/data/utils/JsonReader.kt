@@ -1,7 +1,7 @@
 package com.example.petadopt.animals.data.utils
 
 import androidx.test.platform.app.InstrumentationRegistry
-import com.example.logging.Logger
+import com.example.petadopt.logging.Logger
 import java.io.IOException
 import java.io.InputStream
 

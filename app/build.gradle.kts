@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.dagger.hilt)
     kotlin("kapt")
 }
 
@@ -60,14 +62,19 @@ dependencies {
     implementation(libs.okhttp.logging.interceptor)
     implementation(libs.moshi.kotlin)
     kapt(libs.moshi.codegen)
+    implementation(libs.room)
+    implementation(libs.room.coroutine)
+    implementation(libs.room.paging)
+    kapt(libs.room.compiler)
 
     // Modules
-    implementation(project(":logging"))
 
     //DI
     implementation(libs.hilt)
+    implementation(libs.hilt.multidex)
     kapt(libs.hilt.android.compiler)
     kapt(libs.hilt.compiler)
+    kapt(libs.hilt.kapt.compiler)
     androidTestImplementation(libs.hilt.android.testing)
     kaptAndroidTest(libs.hilt.android.compiler)
 
@@ -78,4 +85,6 @@ dependencies {
     testImplementation(libs.mockwebserver)
     testImplementation(libs.mockito)
     testImplementation(libs.truth)
+
+    implementation(libs.timber)
 }

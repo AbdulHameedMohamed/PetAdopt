@@ -1,11 +1,11 @@
 package com.example.petadopt
 
-import android.app.Application
-import com.example.logging.Logger
+import androidx.multidex.MultiDexApplication
+import com.example.petadopt.logging.Logger
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class PetSaveApplication : Application() {
+class PetSaveApplication : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()

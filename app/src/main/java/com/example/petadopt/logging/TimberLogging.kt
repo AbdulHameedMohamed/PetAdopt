@@ -1,4 +1,4 @@
-package com.example.logging
+package com.example.petadopt.logging
 
 import timber.log.Timber
 
