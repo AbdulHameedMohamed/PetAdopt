@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import com.example.petadopt.animals.domain.model.animal.Media
 
 @Entity(
     tableName = "photos",
@@ -23,4 +24,14 @@ data class CachedPhoto(
     val animalId: Long,
     val medium: String,
     val full: String
-)
+) {
+    companion object {
+        fun fromDomain(animalId: Long, photo: Media.Photo): CachedPhoto {
+            val (medium, full) = photo
+
+            return CachedPhoto(animalId = animalId, medium = medium, full = full)
+        }
+    }
+
+    fun toDomain(): Media.Photo = Media.Photo(medium, full)
+}
