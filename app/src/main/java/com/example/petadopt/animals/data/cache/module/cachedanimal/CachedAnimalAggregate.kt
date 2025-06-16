@@ -6,7 +6,7 @@ import androidx.room.Relation
 
 data class CachedAnimalAggregate(
     @Embedded
-    val animal: CachedAnimalWithDetails,
+    val animal: CachedAnimal,
     @Relation(
         parentColumn = "animalId",
         entityColumn = "animalId"

@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(
     tableName = "animals"
 )
-data class CachedAnimalWithDetails(
+data class CachedAnimal(
     @PrimaryKey
     val animalId: Long,
     val organizationId: String,

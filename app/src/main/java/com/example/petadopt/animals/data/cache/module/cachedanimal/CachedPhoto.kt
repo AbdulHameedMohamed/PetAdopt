@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
     tableName = "photos",
     foreignKeys = [
         ForeignKey(
-            entity = CachedAnimalWithDetails::class,
+            entity = CachedAnimal::class,
             parentColumns = ["animalId"],
             childColumns = ["animalId"],
             onDelete = ForeignKey.CASCADE
