@@ -17,7 +17,13 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.example.petadopt.HiltTestRunner"
+    }
+
+    sourceSets {
+        getByName("androidTest") {
+            assets.srcDirs("src/debug/assets")
+        }
     }
 
     buildTypes {
@@ -87,8 +93,11 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     testImplementation(libs.robolectric)
     testImplementation(libs.mockwebserver)
+    androidTestImplementation(libs.mockwebserver)
     testImplementation(libs.mockito)
     testImplementation(libs.truth)
+    androidTestImplementation(libs.truth)
+    androidTestImplementation(libs.core.testing)
 
     implementation(libs.timber)
 }

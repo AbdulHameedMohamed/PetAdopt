@@ -47,10 +47,12 @@ class PetFinderAnimalRepository @Inject constructor(
     }
 
     override suspend fun storeAnimals(animals: List<Animal>) {
-        val organizations = animals.map { CachedOrganization.fromDomain(it.details!!.organization) }
+        val organizations = animals.map {
+            requireNotNull(it.details) { "Details must be present when storing animals" }.organization
+        }.map(CachedOrganization::fromDomain)
+
         cache.storeOrganizations(organizations)
-        cache.storeNearbyAnimals(animals.map
-        { CachedAnimalAggregate.fromDomain(it) })
+        cache.storeNearbyAnimals(animals.map { CachedAnimalAggregate.fromDomain(it) })
     }
 
     companion object {
