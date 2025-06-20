@@ -7,6 +7,7 @@ import com.example.petadopt.animals.data.cache.module.cachedanimal.CachedAnimal
 import com.example.petadopt.animals.data.cache.module.cachedanimal.CachedPhoto
 import com.example.petadopt.animals.data.cache.module.cachedanimal.CachedTag
 import com.example.petadopt.animals.data.cache.module.cachedanimal.CachedVideo
+import com.example.petadopt.animals.data.cache.module.cachedorganization.CachedOrganization
 import com.example.petadopt.animals.data.daos.AnimalsDao
 import com.example.petadopt.animals.data.daos.OrganizationsDao
 
@@ -16,7 +17,8 @@ import com.example.petadopt.animals.data.daos.OrganizationsDao
         CachedVideo::class,
         CachedTag::class,
         CachedAnimal::class,
-        CachedAnimalTagCrossRef::class
+        CachedAnimalTagCrossRef::class,
+        CachedOrganization::class
     ], version = 1, exportSchema = false
 )
 abstract class PetSaveDatabase : RoomDatabase() {

@@ -27,7 +27,7 @@ abstract class AnimalsDao {
         tags: List<CachedTag>
     )
 
-    suspend fun insertAnimalsWithDetails(animalAggregates:
+    suspend fun insertAnimals(animalAggregates:
                                          List<CachedAnimalAggregate>) {
         for (animalAggregate in animalAggregates) {
             insertAnimalAggregate(
