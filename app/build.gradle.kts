@@ -68,6 +68,10 @@ dependencies {
     kapt(libs.room.compiler)
 
     // Modules
+    implementation(libs.rx.java)
+    implementation(libs.rx.kotlin)
+    implementation(libs.rx.android)
+    implementation(libs.rx.room)
 
     //DI
     implementation(libs.hilt)

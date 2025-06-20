@@ -28,6 +28,11 @@ truth_version = '1.4.4'
 room_version = "2.7.1"
 multidex_version = "2.0.1"
 
+rxjava_version = '2.2.21'
+rxkotlin_version = "2.4.0"
+rxandroid_version = "2.1.1"
+rxroom_version = "2.4.3"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -64,6 +69,11 @@ room = { group = "androidx.room", name = "room-runtime", version.ref = "room_ver
 room_compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room_version" }
 room_coroutine = { group = "androidx.room", name = "room-ktx", version.ref = "room_version" }
 room_paging = { group = "androidx.room", name = "room-paging", version.ref = "room_version" }
+rx_java = { group = "io.reactivex.rxjava2", name = "rxjava", version.ref = "rxjava_version" }
+rx_kotlin = { group = "io.reactivex.rxjava2", name = "rxkotlin", version.ref = "rxkotlin_version" }
+rx_android = { group = "io.reactivex.rxjava2", name = "rxandroid", version.ref = "rxandroid_version" }
+rx_room = { group = "androidx.room", name = "room-rxjava2", version.ref = "rxroom_version" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
