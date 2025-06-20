@@ -1,0 +1,48 @@
+package com.example.petadopt.animals.data.di
+
+import android.content.Context
+import androidx.room.Room
+import com.example.petadopt.animals.data.cache.Cache
+import com.example.petadopt.animals.data.cache.PetSaveDatabase
+import com.example.petadopt.animals.data.cache.RoomCache
+import com.example.petadopt.animals.data.daos.AnimalsDao
+import com.example.petadopt.animals.data.daos.OrganizationsDao
+import dagger.Binds
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class CacheModule {
+
+    @Binds
+    abstract fun bindCache(cache: RoomCache): Cache
+
+    companion object {
+
+        @Provides
+        @Singleton
+        fun provideDatabase(
+            @ApplicationContext context: Context
+        ): PetSaveDatabase {
+            return Room.databaseBuilder(
+                context,
+                PetSaveDatabase::class.java,
+                "petadopt.db"
+            ).build()
+        }
+
+        @Provides
+        fun provideAnimalsDao(
+            petSaveDatabase: PetSaveDatabase
+        ): AnimalsDao = petSaveDatabase.animalsDao()
+
+        @Provides
+        fun provideOrganizationsDao(petSaveDatabase: PetSaveDatabase): OrganizationsDao =
+            petSaveDatabase.organizationsDao()
+    }
+}
