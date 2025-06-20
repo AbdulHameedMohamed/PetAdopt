@@ -9,7 +9,7 @@ import com.example.petadopt.animals.data.ApiParameters.CLIENT_SECRET
 import com.example.petadopt.animals.data.ApiParameters.GRANT_TYPE_KEY
 import com.example.petadopt.animals.data.ApiParameters.GRANT_TYPE_VALUE
 import com.example.petadopt.animals.data.ApiParameters.TOKEN_TYPE
-import com.example.petadopt.animals.data.model.ApiToken
+import com.example.petadopt.animals.data.api.model.ApiToken
 import com.squareup.moshi.Moshi
 import okhttp3.FormBody
 import okhttp3.Interceptor

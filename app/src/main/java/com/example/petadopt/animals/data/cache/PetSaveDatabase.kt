@@ -8,8 +8,8 @@ import com.example.petadopt.animals.data.cache.module.cachedanimal.CachedPhoto
 import com.example.petadopt.animals.data.cache.module.cachedanimal.CachedTag
 import com.example.petadopt.animals.data.cache.module.cachedanimal.CachedVideo
 import com.example.petadopt.animals.data.cache.module.cachedorganization.CachedOrganization
-import com.example.petadopt.animals.data.daos.AnimalsDao
-import com.example.petadopt.animals.data.daos.OrganizationsDao
+import com.example.petadopt.animals.data.cache.daos.AnimalsDao
+import com.example.petadopt.animals.data.cache.daos.OrganizationsDao
 
 @Database(
     entities = [

@@ -5,8 +5,8 @@ import androidx.room.Room
 import com.example.petadopt.animals.data.cache.Cache
 import com.example.petadopt.animals.data.cache.PetSaveDatabase
 import com.example.petadopt.animals.data.cache.RoomCache
-import com.example.petadopt.animals.data.daos.AnimalsDao
-import com.example.petadopt.animals.data.daos.OrganizationsDao
+import com.example.petadopt.animals.data.cache.daos.AnimalsDao
+import com.example.petadopt.animals.data.cache.daos.OrganizationsDao
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

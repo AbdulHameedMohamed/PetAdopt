@@ -1,7 +1,7 @@
 
-package com.example.petadopt.animals.data.model.mapper
+package com.example.petadopt.animals.data.api.model.mapper
 
-import com.example.petadopt.animals.data.model.ApiContact
+import com.example.petadopt.animals.data.api.model.ApiContact
 import com.example.petadopt.animals.domain.model.organization.Organization
 import javax.inject.Inject
 

@@ -1,6 +1,6 @@
-package com.example.petadopt.animals.data.model.mapper
+package com.example.petadopt.animals.data.api.model.mapper
 
-import com.example.petadopt.animals.data.model.ApiAnimal
+import com.example.petadopt.animals.data.api.model.ApiAnimal
 import com.example.petadopt.animals.domain.model.animal.AdoptionStatus
 import com.example.petadopt.animals.domain.model.animal.Animal
 import com.example.petadopt.animals.domain.model.animal.Media

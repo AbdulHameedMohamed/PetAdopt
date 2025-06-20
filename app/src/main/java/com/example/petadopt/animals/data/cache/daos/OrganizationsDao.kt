@@ -1,4 +1,4 @@
-package com.example.petadopt.animals.data.daos
+package com.example.petadopt.animals.data.cache.daos
 
 import androidx.room.Dao
 import androidx.room.Insert

@@ -1,6 +1,6 @@
 package com.example.petadopt.animals.data
 
-import com.example.petadopt.animals.data.model.ApiPaginatedAnimals
+import com.example.petadopt.animals.data.api.model.ApiPaginatedAnimals
 import retrofit2.http.GET
 import retrofit2.http.Query
 

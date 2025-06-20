@@ -1,6 +1,6 @@
-package com.example.petadopt.animals.data.model.mapper
+package com.example.petadopt.animals.data.api.model.mapper
 
-import com.example.petadopt.animals.data.model.ApiEnvironment
+import com.example.petadopt.animals.data.api.model.ApiEnvironment
 import com.example.petadopt.animals.domain.model.animal.details.HabitatAdaptation
 import javax.inject.Inject
 

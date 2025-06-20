@@ -1,6 +1,6 @@
-package com.example.petadopt.animals.data.model.mapper
+package com.example.petadopt.animals.data.api.model.mapper
 
-import com.example.petadopt.animals.data.model.ApiVideoLink
+import com.example.petadopt.animals.data.api.model.ApiVideoLink
 import com.example.petadopt.animals.domain.model.animal.Media
 import javax.inject.Inject
 
