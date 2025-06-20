@@ -3,7 +3,7 @@ package com.example.petadopt.animals.data.di
 import android.content.Context
 import androidx.room.Room
 import com.example.petadopt.animals.data.cache.Cache
-import com.example.petadopt.animals.data.cache.PetSaveDatabase
+import com.example.petadopt.animals.data.cache.PetAdoptDatabase
 import com.example.petadopt.animals.data.cache.RoomCache
 import com.example.petadopt.animals.data.cache.daos.AnimalsDao
 import com.example.petadopt.animals.data.cache.daos.OrganizationsDao
@@ -28,21 +28,21 @@ abstract class CacheModule {
         @Singleton
         fun provideDatabase(
             @ApplicationContext context: Context
-        ): PetSaveDatabase {
+        ): PetAdoptDatabase {
             return Room.databaseBuilder(
                 context,
-                PetSaveDatabase::class.java,
+                PetAdoptDatabase::class.java,
                 "petadopt.db"
             ).build()
         }
 
         @Provides
         fun provideAnimalsDao(
-            petSaveDatabase: PetSaveDatabase
-        ): AnimalsDao = petSaveDatabase.animalsDao()
+            petAdoptDatabase: PetAdoptDatabase
+        ): AnimalsDao = petAdoptDatabase.animalsDao()
 
         @Provides
-        fun provideOrganizationsDao(petSaveDatabase: PetSaveDatabase): OrganizationsDao =
-            petSaveDatabase.organizationsDao()
+        fun provideOrganizationsDao(petAdoptDatabase: PetAdoptDatabase): OrganizationsDao =
+            petAdoptDatabase.organizationsDao()
     }
 }

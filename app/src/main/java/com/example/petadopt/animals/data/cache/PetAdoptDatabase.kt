@@ -21,7 +21,7 @@ import com.example.petadopt.animals.data.cache.daos.OrganizationsDao
         CachedOrganization::class
     ], version = 1, exportSchema = false
 )
-abstract class PetSaveDatabase : RoomDatabase() {
+abstract class PetAdoptDatabase : RoomDatabase() {
     abstract fun organizationsDao(): OrganizationsDao
     abstract fun animalsDao(): AnimalsDao
 }

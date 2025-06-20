@@ -6,7 +6,9 @@ import com.example.petadopt.animals.data.PetFinderApi
 import com.example.petadopt.animals.data.api.model.mapper.ApiAnimalMapper
 import com.example.petadopt.animals.data.api.model.mapper.ApiPaginationMapper
 import com.example.petadopt.animals.data.cache.Cache
-import com.example.petadopt.animals.data.cache.PetSaveDatabase
+import com.example.petadopt.animals.data.cache.PetAdoptDatabase
+import com.example.petadopt.animals.data.cache.RoomCache
+import com.example.petadopt.animals.data.di.CacheModule
 import com.example.petadopt.animals.data.di.PreferencesModule
 import com.example.petadopt.animals.data.preferences.Preferences
 import com.example.petadopt.animals.domain.repository.AnimalRepository
@@ -27,14 +29,13 @@ import javax.inject.Inject
 import com.google.common.truth.Truth.assertThat
 
 @HiltAndroidTest
-@UninstallModules(PreferencesModule::class)
+@UninstallModules(PreferencesModule::class, CacheModule::class)
 class PetFinderAnimalRepositoryTest {
 
     private val fakeServer = FakeServer()
     private lateinit var repository: AnimalRepository
     private lateinit var api: PetFinderApi
-    @Inject
-    lateinit var cache: Cache
+    private lateinit var cache: Cache
 
     @get:Rule
     val hiltRule = HiltAndroidRule(this)
@@ -43,7 +44,7 @@ class PetFinderAnimalRepositoryTest {
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Inject
-    lateinit var database: PetSaveDatabase
+    lateinit var database: PetAdoptDatabase
 
     @Inject
     lateinit var retrofitBuilder: Retrofit.Builder
@@ -74,6 +75,8 @@ class PetFinderAnimalRepositoryTest {
             .build()
             .create(PetFinderApi::class.java)
 
+        cache = RoomCache(database.animalsDao(), database.organizationsDao())
+
         repository = PetFinderAnimalRepository(
             api,
             cache,
@@ -94,6 +97,25 @@ class PetFinderAnimalRepositoryTest {
         // Then
         val animal = paginatedAnimals.animals.first()
         assertThat(animal.id).isEqualTo(expectedAnimalId)
+    }
+
+    @Test
+    fun insertAnimals_success() {
+        // Given
+        val expectedAnimalId = 124L
+        runBlocking {
+            fakeServer.setHappyPathDispatcher()
+            val paginatedAnimals = repository.requestMoreAnimals(1, 100)
+
+            val animal = paginatedAnimals.animals.first()
+            // When
+            repository.storeAnimals(listOf(animal))
+        }
+        // Then
+        val testObserver = repository.getAnimals().test()
+        testObserver.assertNoErrors()
+        testObserver.assertNotComplete()
+        testObserver.assertValue { it.first().id == expectedAnimalId }
     }
 
     @After
