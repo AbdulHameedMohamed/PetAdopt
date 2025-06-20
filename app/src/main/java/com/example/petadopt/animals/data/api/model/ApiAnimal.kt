@@ -3,6 +3,7 @@ package com.example.petadopt.animals.data.api.model
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class ApiAnimal(
     @field:Json(name = "id") val id: Long?,
     @field:Json(name = "organization_id") val organizationId: String?,
