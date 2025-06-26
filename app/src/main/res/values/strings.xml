@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">PetAdopt</string>
+
+    <string name="animals_near_you">Near you</string>
+    <string name="search">Search</string>
+    <string name="animals_near_you_screen_label">Animals near you</string>
+    <string name="search_screen_label">Find your future pet</string>
 </resources>

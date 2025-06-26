@@ -48,6 +48,10 @@ android {
             isIncludeAndroidResources = true
         }
     }
+
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -67,11 +71,13 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging.interceptor)
     implementation(libs.moshi.kotlin)
-    kapt(libs.moshi.codegen)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+    ksp(libs.moshi.codegen)
     implementation(libs.room)
     implementation(libs.room.coroutine)
     implementation(libs.room.paging)
-    kapt(libs.room.compiler)
+    ksp(libs.room.compiler)
 
     // Modules
     implementation(libs.rx.java)
