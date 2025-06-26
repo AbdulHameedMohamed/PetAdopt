@@ -94,6 +94,14 @@ dependencies {
     androidTestImplementation(libs.hilt.android.testing)
     kaptAndroidTest(libs.hilt.android.compiler)
 
+    // Logging Timber
+    implementation(libs.timber)
+
+    //Glide
+    implementation(libs.glide)
+    ksp(libs.glide.compiler)
+
+    // Testing Dependencies
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -104,6 +112,4 @@ dependencies {
     testImplementation(libs.truth)
     androidTestImplementation(libs.truth)
     androidTestImplementation(libs.core.testing)
-
-    implementation(libs.timber)
 }

@@ -1,0 +1,51 @@
+package com.example.petadopt.animals.presentation.animals_near_you
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.example.petadopt.animals.presentation.model.UIAnimal
+import com.example.petadopt.animals.utils.setImage
+import com.example.petadopt.databinding.ItemAnimalBinding
+
+class AnimalsAdapter : ListAdapter<UIAnimal, AnimalsAdapter.AnimalsViewHolder>(ITEM_COMPARATOR) {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimalsViewHolder {
+        return AnimalsViewHolder.from(parent)
+    }
+
+    override fun onBindViewHolder(holder: AnimalsViewHolder, position: Int) {
+        val item: UIAnimal = getItem(position)
+
+        holder.bind(item)
+    }
+
+    class AnimalsViewHolder(
+        private val binding: ItemAnimalBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        companion object {
+            fun from(parent: ViewGroup): AnimalsViewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = ItemAnimalBinding.inflate(layoutInflater, parent, false)
+                return AnimalsViewHolder(binding)
+            }
+        }
+
+        fun bind(item: UIAnimal) {
+            binding.tvName.text = item.name
+            binding.ivPhoto.setImage(item.photo)
+        }
+    }
+}
+
+private val ITEM_COMPARATOR = object : DiffUtil.ItemCallback<UIAnimal>() {
+    override fun areItemsTheSame(oldItem: UIAnimal, newItem: UIAnimal): Boolean {
+        return oldItem.id == newItem.id
+    }
+
+    override fun areContentsTheSame(oldItem: UIAnimal, newItem: UIAnimal): Boolean {
+        return oldItem == newItem
+    }
+}
