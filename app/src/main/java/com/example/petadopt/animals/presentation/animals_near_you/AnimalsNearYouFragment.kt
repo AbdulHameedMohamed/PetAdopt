@@ -10,6 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.petadopt.R
 import com.example.petadopt.animals.presentation.utils.Event
 import com.example.petadopt.databinding.FragmentAnimalsNearYouBinding
@@ -56,7 +58,28 @@ class AnimalsNearYouFragment : Fragment() {
         binding.animalsRecyclerView.apply {
             adapter = animalsNearYouAdapter
             setHasFixedSize(true)
+            addOnScrollListener(createInfiniteScrollListener(layoutManager as GridLayoutManager))
         }
+    }
+
+    private fun createInfiniteScrollListener(
+        layoutManager: GridLayoutManager
+    ): RecyclerView.OnScrollListener {
+        return object : InfiniteScrollListener(
+            layoutManager,
+            AnimalsNearYouViewModel.UI_PAGE_SIZE
+        ) {
+            override fun loadMoreItems() {
+                requestMoreAnimals()
+            }
+
+            override fun isLoading(): Boolean = viewModel.isLoadingMoreAnimals
+            override fun isLastPage(): Boolean = viewModel.isLastPage
+        }
+    }
+
+    private fun requestMoreAnimals() {
+        viewModel.onEvent(AnimalsNearYouEvent.RequestMoreAnimals)
     }
 
     private fun subscribeToViewStateUpdates(adapter: AnimalsAdapter) {
@@ -84,8 +107,7 @@ class AnimalsNearYouFragment : Fragment() {
     }
 
     private fun handleFailures(failure: Event<Throwable>?) {
-        val unhandledFailure = failure?.getContentIfNotHandled() ?:
-        return
+        val unhandledFailure = failure?.getContentIfNotHandled() ?: return
         val fallbackMessage = getString(R.string.an_error_occurred)
         val snackbarMessage = if (unhandledFailure.message.isNullOrEmpty()) {
             fallbackMessage
@@ -93,8 +115,10 @@ class AnimalsNearYouFragment : Fragment() {
             unhandledFailure.message!!
         }
         if (snackbarMessage.isNotEmpty()) {
-            Snackbar.make(requireView(), snackbarMessage,
-                Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(
+                requireView(), snackbarMessage,
+                Snackbar.LENGTH_SHORT
+            ).show()
         }
     }
 

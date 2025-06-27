@@ -34,6 +34,10 @@ class AnimalsNearYouViewModel @Inject constructor(
     private val requestNextPageOfAnimalsUseCase: RequestNextPageOfAnimalsUseCase
 ) : ViewModel() {
 
+    companion object {
+        const val UI_PAGE_SIZE = Pagination.DEFAULT_PAGE_SIZE
+    }
+
     init {
         subscribeToAnimalUpdates()
     }
@@ -42,11 +46,17 @@ class AnimalsNearYouViewModel @Inject constructor(
     val state: StateFlow<AnimalsNearYouViewState> =
         _state.asStateFlow()
 
+    val isLastPage: Boolean
+        get() = state.value.noMoreAnimalsNearby
+    var isLoadingMoreAnimals: Boolean = false
+        private set
+
     private var currentPage = 0
 
     fun onEvent(event: AnimalsNearYouEvent) {
         when (event) {
             is AnimalsNearYouEvent.RequestInitialAnimalsList -> loadAnimals()
+            is AnimalsNearYouEvent.RequestMoreAnimals -> loadNextAnimalPage()
         }
     }
 
@@ -81,6 +91,8 @@ class AnimalsNearYouViewModel @Inject constructor(
     }
 
     private fun loadNextAnimalPage() {
+        isLoadingMoreAnimals = true
+
         val errorMessage = "Failed to fetch nearby animals"
         val exceptionHandler =
             viewModelScope.createExceptionHandler(errorMessage) { onFailure(it) }
@@ -89,6 +101,7 @@ class AnimalsNearYouViewModel @Inject constructor(
             Logger.d("Requesting more animals.")
             val pagination = requestNextPageOfAnimalsUseCase(++currentPage)
             onPaginationInfoObtained(pagination)
+            isLoadingMoreAnimals = false
         }
     }
 
