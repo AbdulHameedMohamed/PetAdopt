@@ -5,13 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.example.petadopt.R
 import com.example.petadopt.databinding.FragmentAnimalsNearYouBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AnimalsNearYouFragment : Fragment() {
+    private val viewModel: AnimalsNearYouViewModel by viewModels()
 
     private var _binding: FragmentAnimalsNearYouBinding? = null
-
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -30,6 +33,7 @@ class AnimalsNearYouFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
         setupUI()
+        requestInitialAnimalsList()
     }
 
     private fun setupUI() {
@@ -44,6 +48,10 @@ class AnimalsNearYouFragment : Fragment() {
             adapter = animalsNearYouAdapter
             setHasFixedSize(true)
         }
+    }
+
+    private fun requestInitialAnimalsList() {
+        viewModel.onEvent(AnimalsNearYouEvent.RequestInitialAnimalsList)
     }
 
     override fun onDestroyView() {

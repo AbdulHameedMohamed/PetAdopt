@@ -5,6 +5,16 @@ data class Media(
     val videos: List<Video>
 ) {
 
+    companion object {
+        const val EMPTY_MEDIA = ""
+    }
+
+    fun getFirstSmallestAvailablePhoto(): String {
+        if (photos.isEmpty()) return EMPTY_MEDIA
+
+        return photos.first().getSmallestAvailablePhoto()
+    }
+
     data class Photo(
         val medium: String,
         val full: String
@@ -13,7 +23,6 @@ data class Media(
             const val EMPTY_PHOTO = ""
         }
 
-        // for the Recycler View need the smallest image
         fun getSmallestAvailablePhoto(): String {
             return when {
                 isValidPhoto(medium) -> medium

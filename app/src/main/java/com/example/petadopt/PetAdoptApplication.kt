@@ -5,7 +5,7 @@ import com.example.petadopt.logging.Logger
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class PetSaveApplication : MultiDexApplication() {
+class PetAdoptApplication : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
