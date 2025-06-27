@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     private val appBarConfiguration by lazy {
-        AppBarConfiguration(topLevelDestinationIds = setOf(R.id.animalsNearYou, R.id.search))
+        AppBarConfiguration(topLevelDestinationIds = setOf(R.id.animalsNearYou, R.id.tv_search))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,6 +1,5 @@
 package com.example.petadopt.animals.presentation.animals_near_you
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.petadopt.animals.domain.NetworkException
@@ -75,7 +74,6 @@ class AnimalsNearYouViewModel @Inject constructor(
 
         val updatedAnimalSet = (state.value.animals + animals).toSet()
 
-        Log.d("hitler", "onNewAnimalList: $updatedAnimalSet")
         _state.update { oldState ->
             oldState.copy(
                 loading = false,

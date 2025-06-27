@@ -1,6 +1,5 @@
 package com.example.petadopt.animals.domain.usecases
 
-import android.util.Log
 import com.example.petadopt.animals.domain.NoMoreAnimalsException
 import com.example.petadopt.animals.domain.model.pagination.Pagination
 import com.example.petadopt.animals.domain.repository.AnimalRepository
@@ -21,7 +20,6 @@ class RequestNextPageOfAnimalsUseCase @Inject constructor(
                 pageToLoad,
                 pageSize
             )
-        Log.d("hitler", "invoke: $animals")
         if (animals.isEmpty()) {
             throw NoMoreAnimalsException("No animals nearby :(")
         }

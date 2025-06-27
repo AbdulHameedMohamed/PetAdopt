@@ -27,8 +27,7 @@ abstract class AnimalsDao {
         tags: List<CachedTag>
     )
 
-    suspend fun insertAnimals(animalAggregates:
-                                         List<CachedAnimalAggregate>) {
+    suspend fun insertAnimals(animalAggregates: List<CachedAnimalAggregate>) {
         for (animalAggregate in animalAggregates) {
             insertAnimalAggregate(
                 animalAggregate.animal,
@@ -38,4 +37,7 @@ abstract class AnimalsDao {
             )
         }
     }
+
+    @Query("SELECT DISTINCT type FROM animals")
+    abstract suspend fun getAllTypes(): List<String>
 }

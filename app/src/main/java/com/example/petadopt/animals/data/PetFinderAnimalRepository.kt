@@ -6,6 +6,7 @@ import com.example.petadopt.animals.data.api.model.mapper.ApiPaginationMapper
 import com.example.petadopt.animals.data.cache.module.cachedanimal.CachedAnimalAggregate
 import com.example.petadopt.animals.data.cache.module.cachedorganization.CachedOrganization
 import com.example.petadopt.animals.domain.model.animal.Animal
+import com.example.petadopt.animals.domain.model.animal.details.Age
 import com.example.petadopt.animals.domain.model.pagination.PaginatedAnimals
 import com.example.petadopt.animals.domain.repository.AnimalRepository
 import io.reactivex.Flowable
@@ -53,6 +54,14 @@ class PetFinderAnimalRepository @Inject constructor(
 
         cache.storeOrganizations(organizations)
         cache.storeNearbyAnimals(animals.map { CachedAnimalAggregate.fromDomain(it) })
+    }
+
+    override suspend fun getAnimalTypes(): List<String> {
+        return cache.getAllTypes()
+    }
+
+    override fun getAnimalAges(): List<Age> {
+        return Age.values().toList()
     }
 
     companion object {
