@@ -8,4 +8,5 @@
     <string name="search_screen_label">Find your future pet</string>
 
     <string name="photo_description">A picture of a dog near you</string>
+    <string name="an_error_occurred">An error occurred. Please try again later.</string>
 </resources>
