@@ -6,6 +6,8 @@ import com.example.petadopt.animals.data.api.model.mapper.ApiPaginationMapper
 import com.example.petadopt.animals.data.cache.module.cachedanimal.CachedAnimalAggregate
 import com.example.petadopt.animals.data.cache.module.cachedorganization.CachedOrganization
 import com.example.petadopt.animals.domain.model.animal.Animal
+import com.example.petadopt.animals.domain.model.animal.SearchParameters
+import com.example.petadopt.animals.domain.model.animal.SearchResults
 import com.example.petadopt.animals.domain.model.animal.details.Age
 import com.example.petadopt.animals.domain.model.pagination.PaginatedAnimals
 import com.example.petadopt.animals.domain.repository.AnimalRepository
@@ -62,6 +64,24 @@ class PetFinderAnimalRepository @Inject constructor(
 
     override fun getAnimalAges(): List<Age> {
         return Age.values().toList()
+    }
+
+    override fun searchCachedAnimalsBy(
+        searchParameters: SearchParameters
+    ): Flowable<SearchResults> {
+        val (name, age, type) = searchParameters
+        return cache.searchAnimalsBy(name, age, type)
+            .distinctUntilChanged()
+            .map { animalList ->
+                animalList.map {
+                    it.animal.toAnimalDomain(
+                        it.photos,
+                        it.videos,
+                        it.tags
+                    )
+                }
+            }
+            .map { SearchResults(it, searchParameters) }
     }
 
     companion object {
