@@ -5,11 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.example.petadopt.R
+import com.example.petadopt.animals.domain.usecases.GetSearchFiltersUseCase
 import com.example.petadopt.animals.presentation.animals_near_you.AnimalsAdapter
+import com.example.petadopt.animals.presentation.utils.Event
 import com.example.petadopt.databinding.FragmentSearchBinding
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -41,6 +46,7 @@ class SearchFragment : Fragment() {
         val adapter = createAdapter()
         setupRecyclerView(adapter)
         prepareForSearch()
+        observeViewStateUpdates()
     }
 
     private fun createAdapter(): AnimalsAdapter = AnimalsAdapter()
@@ -55,6 +61,12 @@ class SearchFragment : Fragment() {
     private fun prepareForSearch() {
         setupFilterListeners()
         viewModel.onEvent(SearchEvent.PrepareForSearch)
+    }
+
+    private fun observeViewStateUpdates() {
+        viewModel.state.observe(viewLifecycleOwner) {
+            updateScreenState(it)
+        }
     }
 
     private fun setupFilterListeners() {
@@ -76,6 +88,65 @@ class SearchFragment : Fragment() {
             parent?.let {
                 block(it.adapter.getItem(position) as String)
             }
+        }
+    }
+
+    private fun updateScreenState(
+        newState: SearchViewState
+    ) {
+        val (
+            ageFilterValues,
+            typeFilterValues,
+            _,
+            _,
+            failure
+        ) = newState
+
+        with (binding.wSearch) {
+            setupFilterValues(
+                acAge,
+                ageFilterValues.getContentIfNotHandled()
+            )
+            setupFilterValues(
+                acType,
+                typeFilterValues.getContentIfNotHandled()
+            )
+        }
+        handleFailures(failure)
+    }
+
+    private fun setupFilterValues(
+        filter: AutoCompleteTextView,
+        filterValues: List<String>?
+    ) {
+        if (filterValues.isNullOrEmpty()) return
+        filter.setAdapter(createFilterAdapter(filterValues))
+        filter.setText(GetSearchFiltersUseCase.NO_FILTER_SELECTED, false)
+    }
+
+    private fun createFilterAdapter(
+        adapterValues: List<String>
+    ): ArrayAdapter<String> {
+        return ArrayAdapter(
+            requireContext(),
+            R.layout.dropdown_menu_popup_item,
+            adapterValues
+        )
+    }
+
+    private fun handleFailures(failure: Event<Throwable>?) {
+        val unhandledFailure = failure?.getContentIfNotHandled() ?: return
+
+        val fallbackMessage = getString(R.string.an_error_occurred)
+        val snackbarMessage = if (unhandledFailure.message.isNullOrEmpty()) {
+            fallbackMessage
+        }
+        else {
+            unhandledFailure.message!!
+        }
+
+        if (snackbarMessage.isNotEmpty()) {
+            Snackbar.make(requireView(), snackbarMessage, Snackbar.LENGTH_SHORT).show()
         }
     }
 
