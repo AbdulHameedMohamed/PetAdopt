@@ -20,6 +20,7 @@ class PetFinderAnimalRepository @Inject constructor(
     private val apiAnimalMapper: ApiAnimalMapper,
     private val apiPaginationMapper: ApiPaginationMapper
 ) : AnimalRepository {
+
     override fun getAnimals(): Flowable<List<Animal>> {
         return cache.getNearbyAnimals()
             .distinctUntilChanged()
@@ -38,8 +39,8 @@ class PetFinderAnimalRepository @Inject constructor(
         val (apiAnimals, apiPagination) = api.getNearbyAnimals(
             pageToLoad,
             numberOfItems,
-            postcode,
-            maxDistanceMiles
+            POST_CODE,
+            MAX_DISTANCE_MILES
         )
         return PaginatedAnimals(
             apiAnimals?.map {
@@ -63,7 +64,7 @@ class PetFinderAnimalRepository @Inject constructor(
     }
 
     override fun getAnimalAges(): List<Age> {
-        return Age.values().toList()
+        return Age.entries
     }
 
     override fun searchCachedAnimalsBy(
@@ -80,12 +81,37 @@ class PetFinderAnimalRepository @Inject constructor(
                         it.tags
                     )
                 }
-            }
-            .map { SearchResults(it, searchParameters) }
+            }.map { SearchResults(it, searchParameters) }
+    }
+
+    override suspend fun searchAnimalsRemotely(
+        pageToLoad: Int,
+        searchParameters: SearchParameters,
+        pageSize: Int
+    ): PaginatedAnimals {
+        val (apiAnimals, apiPagination) = api.searchAnimalsBy(
+            pageToLoad,
+            pageSize,
+            POST_CODE,
+            MAX_DISTANCE_MILES,
+            searchParameters.name,
+            searchParameters.age,
+            searchParameters.type
+        )
+
+        val animals = apiAnimals?.map {
+            apiAnimalMapper.mapToDomain(it)
+        }.orEmpty()
+
+        val pagination = apiPaginationMapper.mapToDomain(apiPagination)
+
+        return PaginatedAnimals(
+            animals, pagination
+        )
     }
 
     companion object {
-        private const val postcode = "07097"
-        private const val maxDistanceMiles = 100
+        private const val POST_CODE = "07097"
+        private const val MAX_DISTANCE_MILES = 100
     }
 }

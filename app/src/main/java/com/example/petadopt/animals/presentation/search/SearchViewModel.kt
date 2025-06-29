@@ -6,10 +6,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.petadopt.animals.domain.NoMoreAnimalsException
 import com.example.petadopt.animals.domain.model.animal.Animal
+import com.example.petadopt.animals.domain.model.animal.SearchParameters
 import com.example.petadopt.animals.domain.model.animal.SearchResults
+import com.example.petadopt.animals.domain.model.pagination.Pagination
 import com.example.petadopt.animals.domain.usecases.GetSearchFiltersUseCase
+import com.example.petadopt.animals.domain.usecases.SearchAnimalsRemotelyUseCase
 import com.example.petadopt.animals.domain.usecases.SearchAnimalsUseCase
 import com.example.petadopt.animals.presentation.model.mappers.UiAnimalMapper
+import com.example.petadopt.animals.utils.DispatchersProvider
 import com.example.petadopt.animals.utils.createExceptionHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -17,7 +21,9 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.BehaviorSubject
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,7 +31,9 @@ class SearchViewModel @Inject constructor(
     private val searchAnimalsUseCase: SearchAnimalsUseCase,
     private val getFilterValues: GetSearchFiltersUseCase,
     private val uiAnimalMapper: UiAnimalMapper,
-    private val compositeDisposable: CompositeDisposable
+    private val compositeDisposable: CompositeDisposable,
+    private val dispatchersProvider: DispatchersProvider,
+    private val searchAnimalsRemotelyUseCase: SearchAnimalsRemotelyUseCase
 ): ViewModel() {
 
     private val _state = MutableLiveData<SearchViewState>()
@@ -35,7 +43,7 @@ class SearchViewModel @Inject constructor(
     private val ageSubject = BehaviorSubject.createDefault("")
     private val typeSubject = BehaviorSubject.createDefault("")
 
-    var currentPage = 0
+    private var currentPage = 0
 
     init {
         _state.value = SearchViewState()
@@ -123,10 +131,31 @@ class SearchViewModel @Inject constructor(
     private fun onSearchResults(searchResults: SearchResults) {
         val (animals, searchParameters) = searchResults
         if (animals.isEmpty()) {
-            // search remotely
+            onEmptyCacheResults(searchParameters)
         } else {
             onAnimalList(animals)
         }
+    }
+
+    private fun onEmptyCacheResults(searchParameters: SearchParameters) {
+        _state.value = state.value!!.updateToSearchingRemotely()
+        searchRemotely(searchParameters)
+    }
+
+    private fun searchRemotely(searchParameters: SearchParameters) {
+        val exceptionHandler = createExceptionHandler("Failed to search remotely.")
+
+        viewModelScope.launch(exceptionHandler) {
+            val pagination = withContext(dispatchersProvider.io()) {
+                searchAnimalsRemotelyUseCase(++currentPage, searchParameters)
+            }
+
+            onPaginationInfoObtained(pagination)
+        }
+    }
+
+    private fun onPaginationInfoObtained(pagination: Pagination) {
+        currentPage = pagination.currentPage
     }
 
     private fun onAnimalList(animals: List<Animal>) {

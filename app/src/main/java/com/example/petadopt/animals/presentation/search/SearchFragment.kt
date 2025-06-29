@@ -122,7 +122,7 @@ class SearchFragment : Fragment() {
             searchResults,
             ageFilterValues,
             typeFilterValues,
-            _,
+            searchingRemotely,
             noResultsState,
             failure
         ) = newState
@@ -141,7 +141,13 @@ class SearchFragment : Fragment() {
             )
         }
         updateNoResultsView(noResultsState)
+        updateRemoteSearchViews(searchingRemotely)
         handleFailures(failure)
+    }
+
+    private fun updateRemoteSearchViews(searchingRemotely: Boolean) {
+        binding.pbSearchRemotely.isVisible = searchingRemotely
+        binding.tvSearchRemotely.isVisible = searchingRemotely
     }
 
     private fun updateNoResultsView(noResultsState: Boolean) {

@@ -22,4 +22,7 @@ object ApiParameters {
     const val LIMIT = "limit"
     const val LOCATION = "location"
     const val DISTANCE = "distance"
+    const val NAME = "name"
+    const val AGE = "age"
+    const val TYPE = "type"
 }

@@ -21,4 +21,10 @@ interface AnimalRepository {
     fun getAnimalAges(): List<Age>
 
     fun searchCachedAnimalsBy(searchParameters: SearchParameters): Flowable<SearchResults>
+
+    suspend fun searchAnimalsRemotely(
+        pageToLoad: Int,
+        searchParameters: SearchParameters,
+        pageSize: Int
+    ): PaginatedAnimals
 }
