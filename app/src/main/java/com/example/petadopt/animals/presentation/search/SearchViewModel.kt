@@ -15,11 +15,13 @@ import com.example.petadopt.animals.domain.usecases.SearchAnimalsUseCase
 import com.example.petadopt.animals.presentation.model.mappers.UiAnimalMapper
 import com.example.petadopt.animals.utils.DispatchersProvider
 import com.example.petadopt.animals.utils.createExceptionHandler
+import com.example.petadopt.logging.Logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.BehaviorSubject
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -45,6 +47,8 @@ class SearchViewModel @Inject constructor(
 
     private var currentPage = 0
 
+    private var remoteSearchJob: Job = Job()
+
     init {
         _state.value = SearchViewState()
     }
@@ -64,11 +68,16 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun onSearchParametersUpdate(event: SearchEvent) {
+        remoteSearchJob.cancel(
+            CancellationException("New search parameters incoming!")
+        )
         when(event) {
             is SearchEvent.QueryInput -> updateQuery(event.input)
             is SearchEvent.AgeValueSelected -> updateAgeValue(event.age)
             is SearchEvent.TypeValueSelected -> updateTypeValue(event.type)
-            else -> {}
+            else -> {
+                Logger.d("Wrong SearchEvent in onSearchParametersUpdate!")
+            }
         }
     }
 
@@ -118,8 +127,7 @@ class SearchViewModel @Inject constructor(
             .subscribe(
                 { onSearchResults(it) },
                 { onFailure(it) }
-            )
-            .addTo(compositeDisposable)
+            ).addTo(compositeDisposable)
     }
 
     private fun updateStateWithFilterValues(ages: List<String>, types: List<String>) {
@@ -145,13 +153,15 @@ class SearchViewModel @Inject constructor(
     private fun searchRemotely(searchParameters: SearchParameters) {
         val exceptionHandler = createExceptionHandler("Failed to search remotely.")
 
-        viewModelScope.launch(exceptionHandler) {
+        remoteSearchJob = viewModelScope.launch(exceptionHandler) {
             val pagination = withContext(dispatchersProvider.io()) {
                 searchAnimalsRemotelyUseCase(++currentPage, searchParameters)
             }
 
             onPaginationInfoObtained(pagination)
         }
+
+        remoteSearchJob.invokeOnCompletion { it?.printStackTrace() }
     }
 
     private fun onPaginationInfoObtained(pagination: Pagination) {
