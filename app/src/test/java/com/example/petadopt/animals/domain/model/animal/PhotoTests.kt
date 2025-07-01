@@ -11,7 +11,7 @@ class PhotoTests {
     @Test
     fun photo_getSmallestAvailablePhoto_hasMediumPhoto() {
         // Given
-        val photo = Media.Photo(mediumPhoto, fullPhoto)
+        val photo = com.example.petadopt.common.domain.model.animal.Media.Photo(mediumPhoto, fullPhoto)
         val expectedValue = mediumPhoto
 
         // When
@@ -24,7 +24,7 @@ class PhotoTests {
     @Test
     fun photo_getSmallestAvailablePhoto_notHasLargePhoto() {
         // Given
-        val photo = Media.Photo(mediumPhoto, "")
+        val photo = com.example.petadopt.common.domain.model.animal.Media.Photo(mediumPhoto, "")
         val expectedValue = mediumPhoto
 
         // When
@@ -37,7 +37,7 @@ class PhotoTests {
     @Test
     fun photo_getSmallestAvailablePhoto_noMediumPhoto_hasFullPhoto() {
         // Given
-        val photo = Media.Photo(invalidPhoto, fullPhoto)
+        val photo = com.example.petadopt.common.domain.model.animal.Media.Photo(invalidPhoto, fullPhoto)
         val expectedValue = fullPhoto
 
         // When
@@ -50,8 +50,8 @@ class PhotoTests {
     @Test
     fun photo_getSmallestAvailablePhoto_noPhotos() {
         // Given
-        val photo = Media.Photo(invalidPhoto, invalidPhoto)
-        val expectedValue = Media.Photo.EMPTY_PHOTO
+        val photo = com.example.petadopt.common.domain.model.animal.Media.Photo(invalidPhoto, invalidPhoto)
+        val expectedValue = com.example.petadopt.common.domain.model.animal.Media.Photo.EMPTY_PHOTO
 
         // When
         val smallestPhoto = photo.getSmallestAvailablePhoto()

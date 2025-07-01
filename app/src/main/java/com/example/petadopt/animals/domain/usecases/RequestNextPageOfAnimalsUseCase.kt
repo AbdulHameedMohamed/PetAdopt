@@ -1,9 +1,9 @@
 package com.example.petadopt.animals.domain.usecases
 
-import com.example.petadopt.animals.domain.NoMoreAnimalsException
-import com.example.petadopt.animals.domain.model.pagination.Pagination
-import com.example.petadopt.animals.domain.repository.AnimalRepository
-import com.example.petadopt.animals.utils.DispatchersProvider
+import com.example.petadopt.common.domain.model.NoMoreAnimalsException
+import com.example.petadopt.common.domain.model.pagination.Pagination
+import com.example.petadopt.common.domain.repository.AnimalRepository
+import com.example.petadopt.common.utils.DispatchersProvider
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 

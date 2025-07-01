@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/animalsNearYou"
-        android:name="com.example.petadopt.animals.presentation.animals_near_you.AnimalsNearYouFragment"
+        android:name="com.example.petadopt.animals.presentation.AnimalsNearYouFragment"
         android:label="@string/animals_near_you_screen_label"
         tools:layout="@layout/fragment_animals_near_you" />
     <fragment
         android:id="@+id/search"
-        android:name="com.example.petadopt.animals.presentation.search.SearchFragment"
+        android:name="com.example.petadopt.search.presentation.SearchFragment"
         android:label="@string/search_screen_label"
         tools:layout="@layout/fragment_search" />
 </navigation>

@@ -1,6 +1,6 @@
-package com.example.petadopt.animals.domain.usecases
+package com.example.petadopt.common.domain.usecases
 
-import com.example.petadopt.animals.domain.repository.AnimalRepository
+import com.example.petadopt.common.domain.repository.AnimalRepository
 import javax.inject.Inject
 
 class GetAnimalsUseCase @Inject constructor(
