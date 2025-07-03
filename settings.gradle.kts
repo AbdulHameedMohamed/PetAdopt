@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "PetAdopt"
 include(":app")
+include(":logging")

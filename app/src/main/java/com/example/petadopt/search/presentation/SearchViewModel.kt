@@ -14,7 +14,7 @@ import com.example.petadopt.search.domain.usecase.GetSearchFiltersUseCase
 import com.example.petadopt.search.domain.usecase.SearchAnimalsRemotelyUseCase
 import com.example.petadopt.search.domain.usecase.SearchAnimalsUseCase
 import com.example.petadopt.common.presentation.model.mappers.UiAnimalMapper
-import com.example.petadopt.logging.Logger
+import com.example.logging.domain.Logger
 import com.example.petadopt.search.domain.model.SearchResults
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers

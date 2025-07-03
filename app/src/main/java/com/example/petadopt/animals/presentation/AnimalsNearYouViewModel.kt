@@ -11,7 +11,7 @@ import com.example.petadopt.animals.domain.usecases.RequestNextPageOfAnimalsUseC
 import com.example.petadopt.common.presentation.model.UIAnimal
 import com.example.petadopt.common.presentation.utils.Event
 import com.example.petadopt.common.utils.createExceptionHandler
-import com.example.petadopt.logging.Logger
+import com.example.logging.domain.Logger
 import com.example.petadopt.common.presentation.model.mappers.UiAnimalMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -70,7 +70,7 @@ class AnimalsNearYouViewModel @Inject constructor(
     }
 
     private fun onNewAnimalList(animals: List<UIAnimal>) {
-        Logger.d("Got more animals!")
+        com.example.logging.domain.Logger.d("Got more animals!")
 
         val updatedAnimalSet = (state.value.animals + animals).toSet()
 
@@ -96,7 +96,7 @@ class AnimalsNearYouViewModel @Inject constructor(
             viewModelScope.createExceptionHandler(errorMessage) { onFailure(it) }
 
         viewModelScope.launch(exceptionHandler) {
-            Logger.d("Requesting more animals.")
+            com.example.logging.domain.Logger.d("Requesting more animals.")
             val pagination = requestNextPageOfAnimalsUseCase(++currentPage)
             onPaginationInfoObtained(pagination)
             isLoadingMoreAnimals = false

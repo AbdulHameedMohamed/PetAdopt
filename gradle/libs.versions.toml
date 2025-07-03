@@ -85,6 +85,7 @@ glide_compiler = { group = "com.github.bumptech.glide", name = "ksp", version.re
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version = "2.1.10-1.0.31" }
 dagger-hilt = { id = "com.google.dagger.hilt.android", version = "2.56" }

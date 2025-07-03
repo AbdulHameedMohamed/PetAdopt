@@ -1,5 +1,6 @@
-package com.example.petadopt.logging
+package com.example.logging.domain
 
+import com.example.logging.data.TimberLogging
 import timber.log.Timber
 
 
