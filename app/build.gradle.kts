@@ -57,29 +57,13 @@ android {
 dependencies {
 
     implementation(project(":logging"))
+    implementation(project(":common"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-
-    // Utils
-    implementation(libs.jakewharton.threetenabp)
-
-    // Networking
-    implementation(libs.squareup.retrofit)
-    implementation(libs.retrofit.converter.moshi)
-    implementation(libs.okhttp)
-    implementation(libs.okhttp.logging.interceptor)
-    implementation(libs.moshi.kotlin)
-    implementation(libs.androidx.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.ui.ktx)
-    ksp(libs.moshi.codegen)
-    implementation(libs.room)
-    implementation(libs.room.coroutine)
-    implementation(libs.room.paging)
-    ksp(libs.room.compiler)
 
     // Modules
     implementation(libs.rx.java)
@@ -99,9 +83,15 @@ dependencies {
     // Logging Timber
     implementation(libs.timber)
 
-    //Glide
-    implementation(libs.glide)
-    ksp(libs.glide.compiler)
+    // Navigation
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+
+    // Coroutine
+    implementation(libs.room.coroutine)
+
+    // Pagination
+    implementation(libs.room.paging)
 
     // Testing Dependencies
     testImplementation(libs.junit)

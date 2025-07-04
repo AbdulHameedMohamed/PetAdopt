@@ -13,8 +13,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.petadopt.R
-import com.example.petadopt.common.presentation.AnimalsAdapter
-import com.example.petadopt.common.presentation.utils.Event
+import com.example.common.presentation.AnimalsAdapter
+import com.example.common.presentation.utils.Event
 import com.example.petadopt.databinding.FragmentAnimalsNearYouBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint

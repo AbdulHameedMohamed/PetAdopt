@@ -1,8 +1,8 @@
 package com.example.petadopt.search.domain.usecase
 
-import com.example.petadopt.search.domain.model.SearchParameters
-import com.example.petadopt.common.domain.repository.AnimalRepository
-import com.example.petadopt.search.domain.model.SearchResults
+import com.example.common.domain.model.search.SearchParameters
+import com.example.common.domain.repository.AnimalRepository
+import com.example.common.domain.model.search.SearchResults
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.Observable
@@ -38,7 +38,7 @@ class SearchAnimalsUseCase @Inject constructor(
 
         return Observable.combineLatest(query, age, type, combiningFunction)
             .toFlowable(BackpressureStrategy.LATEST)
-            .switchMap { parameters: SearchParameters -> // 3
+            .switchMap { parameters: SearchParameters ->
                 animalRepository.searchCachedAnimalsBy(parameters)
             }
     }

@@ -13,8 +13,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.petadopt.R
 import com.example.petadopt.search.domain.usecase.GetSearchFiltersUseCase
-import com.example.petadopt.common.presentation.AnimalsAdapter
-import com.example.petadopt.common.presentation.utils.Event
+import com.example.common.presentation.AnimalsAdapter
+import com.example.common.presentation.utils.Event
 import com.example.petadopt.databinding.FragmentSearchBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint

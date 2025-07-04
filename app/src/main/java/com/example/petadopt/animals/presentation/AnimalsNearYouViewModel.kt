@@ -2,17 +2,17 @@ package com.example.petadopt.animals.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.petadopt.common.domain.model.NetworkException
-import com.example.petadopt.common.domain.model.NetworkUnavailableException
-import com.example.petadopt.common.domain.model.NoMoreAnimalsException
-import com.example.petadopt.common.domain.model.pagination.Pagination
-import com.example.petadopt.common.domain.usecases.GetAnimalsUseCase
+import com.example.common.domain.model.NetworkException
+import com.example.common.domain.model.NetworkUnavailableException
+import com.example.common.domain.model.NoMoreAnimalsException
+import com.example.common.domain.model.pagination.Pagination
 import com.example.petadopt.animals.domain.usecases.RequestNextPageOfAnimalsUseCase
-import com.example.petadopt.common.presentation.model.UIAnimal
-import com.example.petadopt.common.presentation.utils.Event
-import com.example.petadopt.common.utils.createExceptionHandler
+import com.example.common.presentation.model.UIAnimal
+import com.example.common.presentation.utils.Event
+import com.example.common.utils.createExceptionHandler
+import com.example.common.presentation.model.mappers.UiAnimalMapper
 import com.example.logging.domain.Logger
-import com.example.petadopt.common.presentation.model.mappers.UiAnimalMapper
+import com.example.petadopt.animals.domain.usecases.GetAnimalsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -96,7 +96,7 @@ class AnimalsNearYouViewModel @Inject constructor(
             viewModelScope.createExceptionHandler(errorMessage) { onFailure(it) }
 
         viewModelScope.launch(exceptionHandler) {
-            com.example.logging.domain.Logger.d("Requesting more animals.")
+            Logger.d("Requesting more animals.")
             val pagination = requestNextPageOfAnimalsUseCase(++currentPage)
             onPaginationInfoObtained(pagination)
             isLoadingMoreAnimals = false

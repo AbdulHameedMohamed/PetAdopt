@@ -1,9 +1,9 @@
 package com.example.petadopt.search.domain.usecase
 
-import com.example.petadopt.common.domain.model.NoMoreAnimalsException
-import com.example.petadopt.search.domain.model.SearchParameters
-import com.example.petadopt.common.domain.model.pagination.Pagination
-import com.example.petadopt.common.domain.repository.AnimalRepository
+import com.example.common.domain.model.NoMoreAnimalsException
+import com.example.common.domain.model.pagination.Pagination
+import com.example.common.domain.model.search.SearchParameters
+import com.example.common.domain.repository.AnimalRepository
 import javax.inject.Inject
 
 class SearchAnimalsRemotelyUseCase @Inject constructor(

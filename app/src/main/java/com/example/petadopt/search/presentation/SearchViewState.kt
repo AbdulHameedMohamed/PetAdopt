@@ -1,7 +1,7 @@
 package com.example.petadopt.search.presentation
 
-import com.example.petadopt.common.presentation.model.UIAnimal
-import com.example.petadopt.common.presentation.utils.Event
+import com.example.common.presentation.model.UIAnimal
+import com.example.common.presentation.utils.Event
 
 data class SearchViewState(
     val noSearchQuery: Boolean = true,

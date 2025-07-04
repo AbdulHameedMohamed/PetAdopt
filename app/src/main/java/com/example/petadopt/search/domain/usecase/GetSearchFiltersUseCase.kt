@@ -1,9 +1,9 @@
 package com.example.petadopt.search.domain.usecase
 
-import com.example.petadopt.common.domain.model.animal.details.Age
-import com.example.petadopt.common.domain.repository.AnimalRepository
-import com.example.petadopt.common.utils.DispatchersProvider
-import com.example.petadopt.search.domain.model.SearchFilters
+import com.example.common.domain.model.animal.details.Age
+import com.example.common.domain.model.search.SearchFilters
+import com.example.common.domain.repository.AnimalRepository
+import com.example.common.utils.DispatchersProvider
 import kotlinx.coroutines.withContext
 import java.util.Locale
 import javax.inject.Inject
