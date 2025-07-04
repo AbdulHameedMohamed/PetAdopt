@@ -1,4 +1,4 @@
-package com.example.petadopt.animals.domain.usecases
+package com.example.animals.domain.usecases
 
 import com.example.common.domain.model.NoMoreAnimalsException
 import com.example.common.domain.model.pagination.Pagination

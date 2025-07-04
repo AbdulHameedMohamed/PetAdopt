@@ -1,4 +1,4 @@
-package com.example.petadopt.animals.presentation
+package com.example.animals.presentation
 
 import com.example.common.presentation.model.UIAnimal
 import com.example.common.presentation.utils.Event

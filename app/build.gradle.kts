@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.dagger.hilt)
-    kotlin("kapt")
 }
 
 android {
@@ -58,6 +57,7 @@ dependencies {
 
     implementation(project(":logging"))
     implementation(project(":common"))
+    implementation(project(":features:animals"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -74,11 +74,11 @@ dependencies {
     //DI
     implementation(libs.hilt)
     implementation(libs.hilt.multidex)
-    kapt(libs.hilt.android.compiler)
-    kapt(libs.hilt.compiler)
-    kapt(libs.hilt.kapt.compiler)
+    ksp(libs.hilt.android.compiler)
+    ksp(libs.hilt.compiler)
+    ksp(libs.hilt.kapt.compiler)
     androidTestImplementation(libs.hilt.android.testing)
-    kaptAndroidTest(libs.hilt.android.compiler)
+    kspAndroidTest(libs.hilt.android.compiler)
 
     // Logging Timber
     implementation(libs.timber)

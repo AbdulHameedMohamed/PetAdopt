@@ -1,4 +1,4 @@
-package com.example.petadopt.animals.presentation
+package com.example.animals.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,10 +12,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.petadopt.R
+import com.example.animals.R
+import com.example.animals.databinding.FragmentAnimalsNearYouBinding
 import com.example.common.presentation.AnimalsAdapter
 import com.example.common.presentation.utils.Event
-import com.example.petadopt.databinding.FragmentAnimalsNearYouBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

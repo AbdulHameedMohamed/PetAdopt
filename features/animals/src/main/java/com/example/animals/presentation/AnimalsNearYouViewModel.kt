@@ -1,4 +1,4 @@
-package com.example.petadopt.animals.presentation
+package com.example.animals.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -6,13 +6,13 @@ import com.example.common.domain.model.NetworkException
 import com.example.common.domain.model.NetworkUnavailableException
 import com.example.common.domain.model.NoMoreAnimalsException
 import com.example.common.domain.model.pagination.Pagination
-import com.example.petadopt.animals.domain.usecases.RequestNextPageOfAnimalsUseCase
+import com.example.animals.domain.usecases.RequestNextPageOfAnimalsUseCase
 import com.example.common.presentation.model.UIAnimal
 import com.example.common.presentation.utils.Event
 import com.example.common.utils.createExceptionHandler
 import com.example.common.presentation.model.mappers.UiAnimalMapper
 import com.example.logging.domain.Logger
-import com.example.petadopt.animals.domain.usecases.GetAnimalsUseCase
+import com.example.animals.domain.usecases.GetAnimalsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -70,7 +70,7 @@ class AnimalsNearYouViewModel @Inject constructor(
     }
 
     private fun onNewAnimalList(animals: List<UIAnimal>) {
-        com.example.logging.domain.Logger.d("Got more animals!")
+        Logger.d("Got more animals!")
 
         val updatedAnimalSet = (state.value.animals + animals).toSet()
 

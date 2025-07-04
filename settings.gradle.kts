@@ -17,3 +17,4 @@ rootProject.name = "PetAdopt"
 include(":app")
 include(":logging")
 include(":common")
+include(":features:animals")

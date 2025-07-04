@@ -1,4 +1,4 @@
-package com.example.petadopt.animals.presentation
+package com.example.animals.presentation
 
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView

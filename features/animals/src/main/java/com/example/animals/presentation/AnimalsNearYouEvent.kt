@@ -1,4 +1,4 @@
-package com.example.petadopt.animals.presentation
+package com.example.animals.presentation
 
 sealed class AnimalsNearYouEvent {
     data object RequestInitialAnimalsList : AnimalsNearYouEvent()
