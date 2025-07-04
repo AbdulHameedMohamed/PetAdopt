@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_animals_near_you" />
     <fragment
         android:id="@+id/search"
-        android:name="com.example.petadopt.search.presentation.SearchFragment"
+        android:name="com.example.search.presentation.SearchFragment"
         android:label="@string/search_screen_label"
         tools:layout="@layout/fragment_search" />
 </navigation>

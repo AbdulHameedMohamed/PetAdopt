@@ -1,4 +1,4 @@
-package com.example.petadopt.search.presentation
+package com.example.search.presentation
 
 sealed class SearchEvent {
     data object PrepareForSearch : SearchEvent()

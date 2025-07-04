@@ -1,4 +1,4 @@
-package com.example.petadopt.search.domain.usecase
+package com.example.search.domain.usecase
 
 import com.example.common.domain.model.search.SearchParameters
 import com.example.common.domain.repository.AnimalRepository

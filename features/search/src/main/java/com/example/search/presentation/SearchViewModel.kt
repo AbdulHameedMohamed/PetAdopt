@@ -1,4 +1,4 @@
-package com.example.petadopt.search.presentation
+package com.example.search.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,9 +10,9 @@ import com.example.common.utils.createExceptionHandler
 import com.example.common.domain.model.animal.Animal
 import com.example.common.domain.model.search.SearchParameters
 import com.example.common.domain.model.pagination.Pagination
-import com.example.petadopt.search.domain.usecase.GetSearchFiltersUseCase
-import com.example.petadopt.search.domain.usecase.SearchAnimalsRemotelyUseCase
-import com.example.petadopt.search.domain.usecase.SearchAnimalsUseCase
+import com.example.search.domain.usecase.GetSearchFiltersUseCase
+import com.example.search.domain.usecase.SearchAnimalsRemotelyUseCase
+import com.example.search.domain.usecase.SearchAnimalsUseCase
 import com.example.common.presentation.model.mappers.UiAnimalMapper
 import com.example.logging.domain.Logger
 import com.example.common.domain.model.search.SearchResults

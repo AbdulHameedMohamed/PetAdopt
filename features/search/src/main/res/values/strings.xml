@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="a_derpy_cat">A derpy cat</string>
+    <string name="initial_search_text_label">Use the above search field to find your new pet! Don\'t forget to use the filters to narrow down the search.</string>
+    <string name="search_remotely_text_label">Going \"here kitty!\" at the remote server…</string>
+    <string name="a_sad_pug">a sad pug</string>
+    <string name="no_search_results_text_label">Sorry, couldn\'t find anything :(</string>
+    <string name="an_error_occurred">An error occurred. Please try again later.</string>
+</resources>
