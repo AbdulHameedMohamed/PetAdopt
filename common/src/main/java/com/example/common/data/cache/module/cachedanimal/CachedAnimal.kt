@@ -94,7 +94,7 @@ data class CachedAnimal(
             name = name,
             type = type,
             details = mapDetails(organization),
-            media = com.example.common.domain.model.animal.Media(
+            media = Media(
                 photos = photos.map { it.toDomain() },
                 videos = videos.map { it.toDomain() }
             ),
@@ -114,7 +114,7 @@ data class CachedAnimal(
             name = name,
             type = type,
             details = null,
-            media = com.example.common.domain.model.animal.Media(
+            media = Media(
                 photos = photos.map { it.toDomain() },
                 videos = videos.map { it.toDomain() }
             ),

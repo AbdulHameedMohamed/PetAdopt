@@ -33,8 +33,8 @@ rxkotlin_version = "2.4.0"
 rxandroid_version = "2.1.1"
 rxroom_version = "2.7.2"
 androidx_core_testing_version = "2.2.0"
-navigationFragmentKtx = "2.9.0"
-navigationUiKtx = "2.9.0"
+navigationFragmentKtx = "2.9.1"
+navigationUiKtx = "2.9.1"
 glide_version = '4.16.0'
 jetbrainsKotlinJvm = "2.1.10"
 
