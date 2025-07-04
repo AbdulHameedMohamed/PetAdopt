@@ -66,6 +66,19 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
 
+    // Utils
+    implementation(libs.jakewharton.threetenabp)
+
+    // Networking
+    implementation(libs.squareup.retrofit)
+    implementation(libs.retrofit.converter.moshi)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging.interceptor)
+    implementation(libs.moshi.kotlin)
+    ksp(libs.moshi.codegen)
+    implementation(libs.room)
+    ksp(libs.room.compiler)
+
     // Modules
     implementation(libs.rx.java)
     implementation(libs.rx.kotlin)

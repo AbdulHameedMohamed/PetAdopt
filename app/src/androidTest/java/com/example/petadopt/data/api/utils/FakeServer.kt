@@ -1,8 +1,8 @@
 package com.example.petadopt.data.api.utils
 
 import androidx.test.platform.app.InstrumentationRegistry
+import com.example.common.data.api.ApiConstants
 import com.example.logging.domain.Logger
-import com.example.petadopt.common.data.api.ApiConstants
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer

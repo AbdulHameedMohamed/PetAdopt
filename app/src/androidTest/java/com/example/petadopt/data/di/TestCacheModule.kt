@@ -2,7 +2,7 @@ package com.example.petadopt.data.di
 
 import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
-import com.example.petadopt.animals.data.cache.PetAdoptDatabase
+import com.example.common.data.cache.PetAdoptDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

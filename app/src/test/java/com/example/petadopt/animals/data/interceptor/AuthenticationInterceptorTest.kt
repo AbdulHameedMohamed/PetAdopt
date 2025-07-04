@@ -1,9 +1,10 @@
 package com.example.petadopt.animals.data.interceptor
 
 import android.os.Build
-import com.example.petadopt.animals.data.ApiConstants
-import com.example.petadopt.animals.data.ApiParameters
-import com.example.petadopt.animals.data.preferences.Preferences
+import com.example.common.data.api.ApiConstants
+import com.example.common.data.api.ApiParameters
+import com.example.common.data.api.interceptor.AuthenticationInterceptor
+import com.example.common.data.preferences.Preferences
 import com.example.petadopt.animals.data.utils.JsonReader
 import com.google.common.truth.Truth.assertThat
 import okhttp3.OkHttpClient

@@ -1,7 +1,7 @@
 package com.example.petadopt.data.preferences
 
-import com.example.petadopt.animals.data.preferences.Preferences
-import com.example.petadopt.animals.data.preferences.PreferencesConstants
+import com.example.common.data.preferences.Preferences
+import com.example.common.data.preferences.PreferencesConstants
 
 class FakePreferences : Preferences {
     private val preferences = mutableMapOf<String, Any>()
