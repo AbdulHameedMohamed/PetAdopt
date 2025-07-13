@@ -9,15 +9,19 @@ import com.example.common.domain.model.pagination.PaginatedAnimals
 import com.example.common.domain.repository.AnimalRepository
 import com.example.common.data.cache.module.cachedanimal.CachedAnimalAggregate
 import com.example.common.data.cache.module.cachedorganization.CachedOrganization
+import com.example.common.data.preferences.Preferences
+import com.example.common.domain.model.NetworkException
 import com.example.common.domain.model.search.SearchParameters
 import com.example.common.domain.model.search.SearchResults
 import com.example.common.domain.model.animal.details.Age
 import io.reactivex.Flowable
+import retrofit2.HttpException
 import javax.inject.Inject
 
 class PetFinderAnimalRepository @Inject constructor(
     private val api: PetFinderApi,
     private val cache: Cache,
+    private val preferences: Preferences,
     private val apiAnimalMapper: ApiAnimalMapper,
     private val apiPaginationMapper: ApiPaginationMapper
 ) : AnimalRepository {
@@ -26,29 +30,29 @@ class PetFinderAnimalRepository @Inject constructor(
         return cache.getNearbyAnimals()
             .distinctUntilChanged()
             .map { animalList ->
-                animalList.map {
-                    it.animal.toAnimalDomain(
-                        it.photos,
-                        it.videos,
-                        it.tags
-                    )
-                }
+                animalList.map { it.animal.toAnimalDomain(it.photos, it.videos, it.tags) }
             }
     }
 
     override suspend fun requestMoreAnimals(pageToLoad: Int, numberOfItems: Int): PaginatedAnimals {
-        val (apiAnimals, apiPagination) = api.getNearbyAnimals(
-            pageToLoad,
-            numberOfItems,
-            POST_CODE,
-            MAX_DISTANCE_MILES
-        )
-        return PaginatedAnimals(
-            apiAnimals?.map {
-                apiAnimalMapper.mapToDomain(it)
-            }.orEmpty(),
-            apiPaginationMapper.mapToDomain(apiPagination)
-        )
+        val postcode = preferences.getPostcode()
+        val maxDistanceMiles = preferences.getMaxDistanceAllowedToGetAnimals()
+
+        try {
+            val (apiAnimals, apiPagination) = api.getNearbyAnimals(
+                pageToLoad,
+                numberOfItems,
+                postcode,
+                maxDistanceMiles
+            )
+
+            return PaginatedAnimals(
+                apiAnimals?.map { apiAnimalMapper.mapToDomain(it) }.orEmpty(),
+                apiPaginationMapper.mapToDomain(apiPagination)
+            )
+        } catch (exception: HttpException) {
+            throw NetworkException(exception.message ?: "Code ${exception.code()}")
+        }
     }
 
     override suspend fun storeAnimals(animals: List<Animal>) {
@@ -68,21 +72,14 @@ class PetFinderAnimalRepository @Inject constructor(
         return Age.entries
     }
 
-    override fun searchCachedAnimalsBy(
-        searchParameters: SearchParameters
-    ): Flowable<SearchResults> {
+    override fun searchCachedAnimalsBy(searchParameters: SearchParameters): Flowable<SearchResults> {
         val (name, age, type) = searchParameters
+
         return cache.searchAnimalsBy(name, age, type)
-            .distinctUntilChanged()
-            .map { animalList ->
-                animalList.map {
-                    it.animal.toAnimalDomain(
-                        it.photos,
-                        it.videos,
-                        it.tags
-                    )
-                }
-            }.map { SearchResults(it, searchParameters) }
+            .distinctUntilChanged().map { animalList ->
+                animalList.map { it.animal.toAnimalDomain(it.photos, it.videos, it.tags) }
+            }
+            .map { SearchResults(it, searchParameters) }
     }
 
     override suspend fun searchAnimalsRemotely(
@@ -90,29 +87,35 @@ class PetFinderAnimalRepository @Inject constructor(
         searchParameters: SearchParameters,
         pageSize: Int
     ): PaginatedAnimals {
+
+        val postcode = preferences.getPostcode()
+        val maxDistanceMiles = preferences.getMaxDistanceAllowedToGetAnimals()
+
         val (apiAnimals, apiPagination) = api.searchAnimalsBy(
-            pageToLoad,
-            pageSize,
-            POST_CODE,
-            MAX_DISTANCE_MILES,
             searchParameters.name,
             searchParameters.age,
-            searchParameters.type
+            searchParameters.type,
+            pageToLoad,
+            pageSize,
+            postcode,
+            maxDistanceMiles
         )
 
-        val animals = apiAnimals?.map {
-            apiAnimalMapper.mapToDomain(it)
-        }.orEmpty()
-
-        val pagination = apiPaginationMapper.mapToDomain(apiPagination)
-
         return PaginatedAnimals(
-            animals, pagination
+            apiAnimals?.map { apiAnimalMapper.mapToDomain(it) }.orEmpty(),
+            apiPaginationMapper.mapToDomain(apiPagination)
         )
     }
 
-    companion object {
-        private const val POST_CODE = "07097"
-        private const val MAX_DISTANCE_MILES = 100
+    override suspend fun storeOnboardingData(postcode: String, distance: Int) {
+        with(preferences) {
+            putPostcode(postcode)
+            putMaxDistanceAllowedToGetAnimals(distance)
+        }
+    }
+
+    override suspend fun onboardingIsComplete(): Boolean {
+        return preferences.getPostcode().isNotEmpty() &&
+                preferences.getMaxDistanceAllowedToGetAnimals() > 0
     }
 }

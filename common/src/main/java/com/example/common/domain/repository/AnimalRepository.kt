@@ -27,4 +27,8 @@ interface AnimalRepository {
         searchParameters: SearchParameters,
         pageSize: Int
     ): PaginatedAnimals
+
+    suspend fun storeOnboardingData(postcode: String, distance: Int)
+
+    suspend fun onboardingIsComplete(): Boolean
 }

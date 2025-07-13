@@ -17,7 +17,7 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".main.presentation.MainActivity"
             android:exported="true"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -25,6 +25,8 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <nav-graph android:value="@navigation/home_nav_graph" />
         </activity>
     </application>
 
