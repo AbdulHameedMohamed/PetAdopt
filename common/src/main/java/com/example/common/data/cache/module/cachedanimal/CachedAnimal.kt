@@ -109,19 +109,25 @@ data class CachedAnimal(
         videos: List<CachedVideo>,
         tags: List<CachedTag>
     ): Animal {
-        return Animal(
-            id = animalId,
-            name = name,
-            type = type,
-            details = null,
-            media = Media(
-                photos = photos.map { it.toDomain() },
-                videos = videos.map { it.toDomain() }
-            ),
-            tags = tags.map { it.tag },
-            adoptionStatus = AdoptionStatus.valueOf(adoptionStatus),
-            publishedAt = DateTimeUtils.parse(publishedAt)
-        )
+        val animal = try {
+            Animal(
+                id = animalId,
+                name = name,
+                type = type,
+                details = null,
+                media = Media(
+                    photos = photos.map { it.toDomain() },
+                    videos = videos.map { it.toDomain() }
+                ),
+                tags = tags.map { it.tag },
+                adoptionStatus = AdoptionStatus.valueOf(adoptionStatus),
+                publishedAt = DateTimeUtils.parse(publishedAt)
+            )
+        } catch (e: Exception) {
+            throw e
+        }
+
+        return animal
     }
 
     private fun mapDetails(organization: CachedOrganization): Details {

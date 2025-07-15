@@ -1,5 +1,6 @@
 package com.example.common.data
 
+import android.util.Log
 import com.example.common.data.api.PetFinderApi
 import com.example.common.data.api.model.mapper.ApiAnimalMapper
 import com.example.common.data.api.model.mapper.ApiPaginationMapper
@@ -30,6 +31,8 @@ class PetFinderAnimalRepository @Inject constructor(
         return cache.getNearbyAnimals()
             .distinctUntilChanged()
             .map { animalList ->
+                Log.d("hitler", "getAnimals: ${animalList.map { it.animal.toAnimalDomain(it.photos, it.videos, it.tags) }}")
+
                 animalList.map { it.animal.toAnimalDomain(it.photos, it.videos, it.tags) }
             }
     }
@@ -46,11 +49,14 @@ class PetFinderAnimalRepository @Inject constructor(
                 maxDistanceMiles
             )
 
+            Log.d("abdulhameed", "requestMoreAnimals: $apiAnimals")
             return PaginatedAnimals(
                 apiAnimals?.map { apiAnimalMapper.mapToDomain(it) }.orEmpty(),
                 apiPaginationMapper.mapToDomain(apiPagination)
             )
         } catch (exception: HttpException) {
+            exception.printStackTrace()
+            Log.d("abdulhameed", "requestMoreAnimals: ${exception.message() ?: exception.code()}")
             throw NetworkException(exception.message ?: "Code ${exception.code()}")
         }
     }
@@ -63,6 +69,14 @@ class PetFinderAnimalRepository @Inject constructor(
         cache.storeOrganizations(organizations)
         cache.storeNearbyAnimals(animals.map { CachedAnimalAggregate.fromDomain(it) })
     }
+
+    override suspend fun getAnimal(animalId: Long): Animal {
+        val (animal, photos, videos, tags) = cache.getAnimal(animalId)
+        val organization = cache.getOrganization(animal.organizationId)
+
+        return animal.toDomain(photos, videos, tags, organization)
+    }
+
 
     override suspend fun getAnimalTypes(): List<String> {
         return cache.getAllTypes()

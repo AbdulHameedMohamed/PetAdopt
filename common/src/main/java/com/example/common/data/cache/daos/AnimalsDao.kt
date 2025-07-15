@@ -19,6 +19,10 @@ abstract class AnimalsDao {
     @Query("SELECT * FROM animals ORDER BY animalId DESC")
     abstract fun getAllAnimals(): Flowable<List<CachedAnimalAggregate>>
 
+    @Transaction
+    @Query("SELECT * FROM animals WHERE animalId IS :animalId")
+    abstract suspend fun getAnimal(animalId: Long): CachedAnimalAggregate
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insertAnimalAggregate(
         animal: CachedAnimal,
@@ -42,11 +46,17 @@ abstract class AnimalsDao {
     abstract suspend fun getAllTypes(): List<String>
 
     @Transaction
-    @Query("""
+    @Query(
+        """
         SELECT * FROM animals
         WHERE name LIKE '%' || :name || '%'
         AND age LIKE '%' || :age || '%'
         AND type LIKE '%' || :type || '%'
-    """)
-    abstract fun searchAnimalsBy(name: String, age: String, type: String): Flowable<List<CachedAnimalAggregate>>
+    """
+    )
+    abstract fun searchAnimalsBy(
+        name: String,
+        age: String,
+        type: String
+    ): Flowable<List<CachedAnimalAggregate>>
 }

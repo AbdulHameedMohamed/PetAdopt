@@ -60,6 +60,7 @@ dependencies {
     implementation(project(":features:animals"))
     implementation(project(":features:search"))
     implementation(project(":features:onboarding"))
+    implementation(project(":features:sharing"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

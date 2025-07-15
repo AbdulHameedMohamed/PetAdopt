@@ -1,4 +1,4 @@
-package com.example.animals.presentation
+package com.example.animals.presentation.main
 
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView

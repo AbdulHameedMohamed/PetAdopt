@@ -1,4 +1,4 @@
-package com.example.animals.presentation
+package com.example.animals.presentation.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,10 +10,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.animals.R
 import com.example.animals.databinding.FragmentAnimalsNearYouBinding
+import com.example.common.R
 import com.example.common.presentation.AnimalsAdapter
 import com.example.common.presentation.utils.Event
 import com.google.android.material.snackbar.Snackbar
@@ -53,11 +54,15 @@ class AnimalsNearYouFragment : Fragment() {
         subscribeToViewStateUpdates(adapter)
     }
 
-    private fun createAdapter(): AnimalsAdapter = AnimalsAdapter()
+    private fun createAdapter(): AnimalsAdapter = AnimalsAdapter { animalId ->
+        val action = AnimalsNearYouFragmentDirections.actionAnimalsNearYouToDetails(animalId)
+        findNavController().navigate(action)
+    }
 
     private fun setupRecyclerView(animalsNearYouAdapter: AnimalsAdapter) {
         binding.animalsRecyclerView.apply {
             adapter = animalsNearYouAdapter
+            layoutManager = GridLayoutManager(requireContext(), 2)
             setHasFixedSize(true)
             addOnScrollListener(createInfiniteScrollListener(layoutManager as GridLayoutManager))
         }

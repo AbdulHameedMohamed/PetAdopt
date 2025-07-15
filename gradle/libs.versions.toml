@@ -37,6 +37,7 @@ navigationFragmentKtx = "2.9.1"
 navigationUiKtx = "2.9.1"
 glide_version = '4.16.0'
 jetbrainsKotlinJvm = "2.1.10"
+navigation = "2.9.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -91,3 +92,4 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version = "2.1.10-1.0.31" }
 dagger-hilt = { id = "com.google.dagger.hilt.android", version = "2.56" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
+safeargs-kotlin = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation" }
