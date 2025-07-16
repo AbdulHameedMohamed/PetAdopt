@@ -38,6 +38,7 @@ navigationUiKtx = "2.9.1"
 glide_version = '4.16.0'
 jetbrainsKotlinJvm = "2.1.10"
 navigation = "2.9.1"
+lottie_version = "5.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -88,6 +89,7 @@ navigation-dynamic-feature = { group = "androidx.navigation", name = "navigation
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide_version" }
 glide_compiler = { group = "com.github.bumptech.glide", name = "ksp", version.ref = "glide_version" }
 jetbrains-kotlin-jvm = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version.ref = "kotlin" }
+android-lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie_version" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

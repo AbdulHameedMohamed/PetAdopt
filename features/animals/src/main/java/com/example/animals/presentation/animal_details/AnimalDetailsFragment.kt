@@ -1,6 +1,9 @@
 package com.example.animals.presentation.animal_details
 
 import android.annotation.SuppressLint
+import android.graphics.Color
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
@@ -12,6 +15,7 @@ import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RawRes
 import androidx.core.net.toUri
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -23,6 +27,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.fragment.findNavController
+import com.airbnb.lottie.LottieProperty
+import com.airbnb.lottie.model.KeyPath
 import com.example.animals.R
 import com.example.common.R.string.an_error_occurred
 import com.example.animals.databinding.FragmentDetailsBinding
@@ -130,7 +136,7 @@ class AnimalDetailsFragment : Fragment() {
         binding.tvSprayedNeutered.text = animalDetails.sprayNeutered.toEnglish()
         binding.tvSpecialNeeds.text = animalDetails.specialNeeds.toEnglish()
 
-        val doubleTapGestureListener = object: GestureDetector.SimpleOnGestureListener() {
+        val doubleTapGestureListener = object : GestureDetector.SimpleOnGestureListener() {
             override fun onDoubleTap(e: MotionEvent): Boolean {
                 return true
             }
@@ -146,23 +152,41 @@ class AnimalDetailsFragment : Fragment() {
     }
 
     private fun displayError() {
-        startAnimation()
+        startAnimation(R.raw.lazy_cat)
         binding.group.isVisible = false
         Snackbar.make(requireView(), an_error_occurred, Snackbar.LENGTH_SHORT).show()
     }
 
     private fun displayLoading() {
-        startAnimation()
+        startAnimation(R.raw.happy_dog)
         binding.group.isVisible = false
     }
 
-    private fun startAnimation() {
-        Log.d("hitler", "startAnimation: ")
-        binding.loader.isVisible = true
+    private fun startAnimation(@RawRes animationRes: Int) {
+        binding.loader.apply {
+            isVisible = true
+            setMinFrame(50)
+            setMaxFrame(112)
+            speed = 1.5f
+            setAnimation(animationRes)
+            playAnimation()
+        }
+        binding.loader.addValueCallback(
+            KeyPath("icon_circle", "**"),
+            LottieProperty.COLOR_FILTER, {
+                PorterDuffColorFilter(
+                    Color.GREEN,
+                    PorterDuff.Mode.SRC_ATOP
+                )
+            }
+        )
     }
 
     private fun stopAnimation() {
-        Log.d("hitler", "stopAnimation: ")
+        binding.loader.apply {
+            cancelAnimation()
+            isVisible = false
+        }
     }
 
     override fun onDestroyView() {

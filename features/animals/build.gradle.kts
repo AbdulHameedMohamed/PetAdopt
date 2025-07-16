@@ -44,6 +44,12 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":logging"))
 
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.constraintlayout)
+
     //DI
     implementation(libs.hilt)
     implementation(libs.hilt.multidex)
@@ -63,11 +69,8 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    implementation(libs.androidx.activity)
-    implementation(libs.androidx.constraintlayout)
+    // Lottie
+    implementation(libs.android.lottie)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
