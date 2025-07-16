@@ -1,10 +1,15 @@
 package com.example.animals.presentation.animal_details
 
+import android.annotation.SuppressLint
+import android.graphics.Rect
 import android.os.Bundle
+import android.util.Log
+import android.view.GestureDetector
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.net.toUri
@@ -115,22 +120,49 @@ class AnimalDetailsFragment : Fragment() {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun displayPetDetails(animalDetails: UIAnimalDetailed) {
         binding.group.isVisible = true
+        stopAnimation()
         binding.name.text = animalDetails.name
         binding.description.text = animalDetails.description
         binding.ivImage.setImage(animalDetails.photo)
         binding.tvSprayedNeutered.text = animalDetails.sprayNeutered.toEnglish()
         binding.tvSpecialNeeds.text = animalDetails.specialNeeds.toEnglish()
+
+        val doubleTapGestureListener = object: GestureDetector.SimpleOnGestureListener() {
+            override fun onDoubleTap(e: MotionEvent): Boolean {
+                return true
+            }
+
+            override fun onDown(e: MotionEvent) = true
+        }
+        val doubleTapGestureDetector = GestureDetector(requireContext(), doubleTapGestureListener)
+
+        binding.ivImage.setOnTouchListener { v, event ->
+            Log.d("hitler", "displayPetDetails: ")
+            doubleTapGestureDetector.onTouchEvent(event)
+        }
     }
 
     private fun displayError() {
+        startAnimation()
         binding.group.isVisible = false
         Snackbar.make(requireView(), an_error_occurred, Snackbar.LENGTH_SHORT).show()
     }
 
     private fun displayLoading() {
+        startAnimation()
         binding.group.isVisible = false
+    }
+
+    private fun startAnimation() {
+        Log.d("hitler", "startAnimation: ")
+        binding.loader.isVisible = true
+    }
+
+    private fun stopAnimation() {
+        Log.d("hitler", "stopAnimation: ")
     }
 
     override fun onDestroyView() {
