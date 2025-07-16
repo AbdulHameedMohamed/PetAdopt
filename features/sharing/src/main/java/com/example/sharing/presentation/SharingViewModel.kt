@@ -4,14 +4,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.common.domain.usecases.GetAnimalDetailsUseCase
 import com.example.sharing.presentation.model.mapper.UiAnimalToShareMapper
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@HiltViewModel
+
 class SharingViewModel @Inject constructor(
     private val getAnimalDetails: GetAnimalDetailsUseCase,
     private val uiAnimalToShareMapper: UiAnimalToShareMapper

@@ -45,4 +45,7 @@ dependencies {
     // DI
     implementation(libs.hilt)
     implementation(libs.hilt.multidex)
+    implementation(libs.google.dagger)
+    ksp(libs.dagger.compiler)
+
 }
