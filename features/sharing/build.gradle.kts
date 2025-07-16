@@ -45,7 +45,4 @@ dependencies {
     // DI
     implementation(libs.hilt)
     implementation(libs.hilt.multidex)
-    ksp(libs.hilt.android.compiler)
-    ksp(libs.hilt.compiler)
-    ksp(libs.hilt.kapt.compiler)
 }
