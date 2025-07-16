@@ -18,5 +18,5 @@
     <string name="search_remotely_text_label">Going \"here kitty!\" at the remote server…</string>
     <string name="a_sad_pug">a sad pug</string>
     <string name="no_search_results_text_label">Sorry, couldn\'t find anything :(</string>
-
+    <string name="dynamic_feature_sharing_title">Share an animal</string>
 </resources>

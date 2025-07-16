@@ -82,14 +82,18 @@ rx_room = { group = "androidx.room", name = "room-rxjava2", version.ref = "rxroo
 core_testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "androidx_core_testing_version" }
 androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
 androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
+navigation-dynamic-feature = { group = "androidx.navigation", name = "navigation-dynamic-features-fragment", version.ref = "navigationFragmentKtx" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide_version" }
 glide_compiler = { group = "com.github.bumptech.glide", name = "ksp", version.ref = "glide_version" }
+jetbrains-kotlin-jvm = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version.ref = "kotlin" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version = "2.1.10-1.0.31" }
-dagger-hilt = { id = "com.google.dagger.hilt.android", version = "2.56" }
+dagger-hilt = { id = "com.google.dagger.hilt.android", version = "2.56.2" }
+android-dagger-hilt = { id = "dagger.hilt.android.plugin" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
 safeargs-kotlin = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation" }
+android-dynamic-feature = { id = "com.android.dynamic-feature" }

@@ -51,20 +51,23 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+    dynamicFeatures.add(":features:sharing")
 }
 
 dependencies {
 
-    implementation(project(":logging"))
-    implementation(project(":common"))
+    api(project(":common"))
+    api(project(":logging"))
     implementation(project(":features:animals"))
     implementation(project(":features:search"))
     implementation(project(":features:onboarding"))
-    implementation(project(":features:sharing"))
+
+    api(libs.jetbrains.kotlin.jvm)
+    api(libs.androidx.appcompat)
+    api(libs.material)
 
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
 
@@ -100,8 +103,9 @@ dependencies {
     implementation(libs.timber)
 
     // Navigation
-    implementation(libs.androidx.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.ui.ktx)
+    api(libs.androidx.navigation.fragment.ktx)
+    api(libs.androidx.navigation.ui.ktx)
+    api(libs.navigation.dynamic.feature)
 
     // Coroutine
     implementation(libs.room.coroutine)

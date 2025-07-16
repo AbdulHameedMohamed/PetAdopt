@@ -1,11 +1,11 @@
 package com.example.petadopt
 
-import androidx.multidex.MultiDexApplication
 import com.example.logging.domain.Logger
+import com.google.android.play.core.splitcompat.SplitCompatApplication
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class PetAdoptApplication : MultiDexApplication() {
+class PetAdoptApplication : SplitCompatApplication() {
 
     override fun onCreate() {
         super.onCreate()
