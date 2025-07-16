@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.dynamicfeatures.fragment.DynamicNavHostFragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -24,10 +25,10 @@ class MainActivity : AppCompatActivity() {
     private val viewModel by viewModels<MainViewModel>()
 
     private val navController by lazy {
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        navHostFragment.navController
+        (supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
+                as DynamicNavHostFragment).navController
     }
+
     private val appBarConfiguration by lazy {
         AppBarConfiguration(
             topLevelDestinationIds = setOf(
