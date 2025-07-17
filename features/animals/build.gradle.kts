@@ -72,6 +72,9 @@ dependencies {
     // Lottie
     implementation(libs.android.lottie)
 
+    // dynamicanimation
+    implementation(libs.androidx.dynamicanimation)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

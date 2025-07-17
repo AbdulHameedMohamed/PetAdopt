@@ -4,30 +4,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/loader"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:lottie_loop="true" />
-
     <ImageView
         android:id="@+id/iv_image"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:contentDescription="@string/image_of_pet"
+        android:scaleType="centerCrop"
         app:layout_constraintDimensionRatio="H,10:8"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/pet_adopt_image" />
 
     <ImageView
         android:id="@+id/heart_image"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:contentDescription="@string/image_of_pet"
+        android:elevation="1dp"
         app:layout_constraintBottom_toBottomOf="@id/iv_image"
         app:layout_constraintDimensionRatio="H,10:8"
         app:layout_constraintEnd_toEndOf="@id/iv_image"
         app:layout_constraintStart_toStartOf="@id/iv_image"
-        app:layout_constraintTop_toTopOf="@id/iv_image" />
+        app:layout_constraintTop_toTopOf="@id/iv_image"
+        app:srcCompat="@drawable/heart_fill_animation" />
 
     <TextView
         android:id="@+id/name"
@@ -41,96 +39,108 @@
         app:layout_constraintTop_toBottomOf="@id/iv_image"
         tools:text="Wallace" />
 
-    <TextView
-        android:id="@+id/description"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
-        android:textSize="@dimen/small_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/name"
-        tools:text="Hi! My name's Wallace. I'm a one year old boy searching for my furever home! Some of my favorite things include: taking long naps, eating big bowls of food, and giving you all of my love and attention!" />
-
-    <TextView
-        android:id="@+id/l_special_needs"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_margin"
-        android:layout_marginTop="@dimen/default_margin"
-        android:text="@string/special_needs"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider" />
-
-    <TextView
-        android:id="@+id/tv_special_needs"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_margin"
-        app:layout_constraintBottom_toBottomOf="@id/l_special_needs"
-        app:layout_constraintStart_toEndOf="@id/l_special_needs"
-        app:layout_constraintTop_toTopOf="@id/l_special_needs"
-        tools:text="Yes" />
-
-    <TextView
-        android:id="@+id/l_sprayed_neutered"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_margin"
-        android:layout_marginTop="@dimen/half_default_margin"
-        android:text="@string/sprayed_or_neutered"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/l_special_needs" />
-
-    <TextView
-        android:id="@+id/tv_sprayed_neutered"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_margin"
-        app:layout_constraintBottom_toBottomOf="@id/l_sprayed_neutered"
-        app:layout_constraintStart_toEndOf="@id/l_sprayed_neutered"
-        app:layout_constraintTop_toTopOf="@id/l_sprayed_neutered"
-        tools:text="Yes" />
-
-    <View
-        android:id="@+id/divider"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="@dimen/half_default_margin"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintTop_toBottomOf="@+id/cg_tags" />
-
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/cg_tags"
-        style="@style/Widget.MaterialComponents.Chip.Entry"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/description">
+        app:layout_constraintTop_toBottomOf="@id/name">
 
-        <com.google.android.material.chip.Chip
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/half_default_margin"
-            android:text="@string/young" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <com.google.android.material.chip.Chip
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/half_default_margin"
-            android:text="@string/cute" />
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                android:textSize="@dimen/small_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Hi! My name's Wolf. I'm a one year old boy searching for my furever home! Some of my favorite things include: taking long naps, eating big bowls of food, and giving you all of my love and attention!" />
 
-        <com.google.android.material.chip.Chip
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/half_default_margin"
-            android:text="@string/playful" />
+            <TextView
+                android:id="@+id/l_special_needs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin"
+                android:text="@string/special_needs"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider" />
 
-    </com.google.android.material.chip.ChipGroup>
+            <TextView
+                android:id="@+id/tv_special_needs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_margin"
+                app:layout_constraintBottom_toBottomOf="@id/l_special_needs"
+                app:layout_constraintStart_toEndOf="@id/l_special_needs"
+                app:layout_constraintTop_toTopOf="@id/l_special_needs"
+                tools:text="Yes" />
+
+            <TextView
+                android:id="@+id/l_sprayed_neutered"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginTop="@dimen/half_default_margin"
+                android:text="@string/sprayed_or_neutered"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/l_special_needs" />
+
+            <TextView
+                android:id="@+id/tv_sprayed_neutered"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_margin"
+                app:layout_constraintBottom_toBottomOf="@id/l_sprayed_neutered"
+                app:layout_constraintStart_toEndOf="@id/l_sprayed_neutered"
+                app:layout_constraintTop_toTopOf="@id/l_sprayed_neutered"
+                tools:text="Yes" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/half_default_margin"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintTop_toBottomOf="@+id/cg_tags" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/cg_tags"
+                style="@style/Widget.MaterialComponents.Chip.Entry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description">
+
+                <com.google.android.material.chip.Chip
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/half_default_margin"
+                    android:text="@string/young" />
+
+                <com.google.android.material.chip.Chip
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/half_default_margin"
+                    android:text="@string/cute" />
+
+                <com.google.android.material.chip.Chip
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/half_default_margin"
+                    android:text="@string/playful" />
+
+            </com.google.android.material.chip.ChipGroup>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_call"
@@ -146,11 +156,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:tint="@android:color/white" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loader"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:lottie_loop="true" />
+
     <androidx.constraintlayout.widget.Group
         android:id="@+id/group"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:constraint_referenced_ids="name, description, iv_image, tv_special_needs, l_special_needs, tv_sprayed_neutered, l_sprayed_neutered, divider, cg_tags, btn_call" />
-
+        app:constraint_referenced_ids="name, iv_image, scrollView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

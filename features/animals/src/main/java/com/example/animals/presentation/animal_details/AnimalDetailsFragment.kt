@@ -5,8 +5,8 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.graphics.Rect
+import android.graphics.drawable.Animatable
 import android.os.Bundle
-import android.util.Log
 import android.view.GestureDetector
 import android.view.LayoutInflater
 import android.view.Menu
@@ -16,16 +16,19 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RawRes
-import androidx.core.net.toUri
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
+import androidx.dynamicanimation.animation.DynamicAnimation
+import androidx.dynamicanimation.animation.FlingAnimation
+import androidx.dynamicanimation.animation.SpringAnimation
+import androidx.dynamicanimation.animation.SpringForce
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.fragment.findNavController
 import com.airbnb.lottie.LottieProperty
 import com.airbnb.lottie.model.KeyPath
@@ -43,6 +46,7 @@ import kotlinx.coroutines.launch
 class AnimalDetailsFragment : Fragment() {
 
     companion object {
+        const val FLING_SCALE = 1f
         const val ANIMAL_ID = "id"
     }
 
@@ -52,6 +56,43 @@ class AnimalDetailsFragment : Fragment() {
     private val viewModel: AnimalDetailsViewModel by viewModels()
 
     private var animalId: Long? = null
+
+    private val springForce: SpringForce by lazy {
+        SpringForce().apply {
+            dampingRatio = SpringForce.DAMPING_RATIO_HIGH_BOUNCY
+            stiffness = SpringForce.STIFFNESS_VERY_LOW
+        }
+    }
+
+    private val callScaleXSpringAnimation: SpringAnimation by lazy {
+        SpringAnimation(binding.btnCall, DynamicAnimation.SCALE_X).apply {
+            spring = springForce
+        }
+    }
+
+    private val callScaleYSpringAnimation: SpringAnimation by lazy {
+        SpringAnimation(binding.btnCall, DynamicAnimation.SCALE_Y).apply {
+            spring = springForce
+        }
+    }
+
+    private val FLING_FRICTION = 2f
+
+    private val callFlingXAnimation: FlingAnimation by lazy {
+        FlingAnimation(binding.btnCall, DynamicAnimation.X).apply {
+            friction = FLING_FRICTION
+            setMinValue(0f)
+            setMaxValue(binding.root.width.toFloat() - binding.btnCall.width.toFloat())
+        }
+    }
+
+    private val callFlingYAnimation: FlingAnimation by lazy {
+        FlingAnimation(binding.btnCall, DynamicAnimation.Y).apply {
+            friction = FLING_FRICTION
+            setMinValue(0f)
+            setMaxValue(binding.root.height.toFloat() - binding.btnCall.width.toFloat())
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,7 +112,10 @@ class AnimalDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        postponeEnterTransition()
+        view.doOnPreDraw {
+            startPostponedEnterTransition()
+        }
         addShareMenu()
         subscribeToStateUpdates()
         val event = AnimalDetailsEvent.LoadAnimalDetails(animalId!!)
@@ -138,6 +182,7 @@ class AnimalDetailsFragment : Fragment() {
 
         val doubleTapGestureListener = object : GestureDetector.SimpleOnGestureListener() {
             override fun onDoubleTap(e: MotionEvent): Boolean {
+                (binding.heartImage.drawable as Animatable?)?.start()
                 return true
             }
 
@@ -145,9 +190,43 @@ class AnimalDetailsFragment : Fragment() {
         }
         val doubleTapGestureDetector = GestureDetector(requireContext(), doubleTapGestureListener)
 
-        binding.ivImage.setOnTouchListener { v, event ->
-            Log.d("hitler", "displayPetDetails: ")
+        binding.heartImage.setOnTouchListener { v, event ->
             doubleTapGestureDetector.onTouchEvent(event)
+        }
+
+        callScaleXSpringAnimation.animateToFinalPosition(FLING_SCALE)
+        callScaleYSpringAnimation.animateToFinalPosition(FLING_SCALE)
+
+        val flingGestureListener = object : GestureDetector.SimpleOnGestureListener() {
+            override fun onFling(
+                e1: MotionEvent?,
+                e2: MotionEvent,
+                velocityX: Float,
+                velocityY: Float
+            ): Boolean {
+                callFlingXAnimation.setStartVelocity(velocityX).start()
+                callFlingYAnimation.setStartVelocity(velocityY).start()
+                return true
+            }
+
+            override fun onDown(e: MotionEvent) = true
+        }
+        val flingGestureDetector = GestureDetector(requireContext(), flingGestureListener)
+
+        binding.btnCall.setOnTouchListener { v, event ->
+            flingGestureDetector.onTouchEvent(event)
+        }
+
+        binding.root.post {
+            callFlingXAnimation.setMaxValue(binding.root.width.toFloat() - binding.btnCall.width)
+            callFlingYAnimation.setMaxValue(binding.root.height.toFloat() - binding.btnCall.height)
+
+            callFlingYAnimation.addEndListener { _, _, _, _ ->
+                if (areViewsOverlapping(binding.btnCall, binding.ivImage)) {
+                    val action = AnimalDetailsFragmentDirections.actionDetailsToSecret()
+                    findNavController().navigate(action)
+                }
+            }
         }
     }
 
@@ -167,17 +246,15 @@ class AnimalDetailsFragment : Fragment() {
             isVisible = true
             setMinFrame(50)
             setMaxFrame(112)
-            speed = 1.5f
+            speed = 1.2f
             setAnimation(animationRes)
             playAnimation()
         }
         binding.loader.addValueCallback(
             KeyPath("icon_circle", "**"),
-            LottieProperty.COLOR_FILTER, {
-                PorterDuffColorFilter(
-                    Color.GREEN,
-                    PorterDuff.Mode.SRC_ATOP
-                )
+            LottieProperty.COLOR_FILTER,
+            {
+                PorterDuffColorFilter(Color.LTGRAY, PorterDuff.Mode.SRC_ATOP)
             }
         )
     }
@@ -187,6 +264,16 @@ class AnimalDetailsFragment : Fragment() {
             cancelAnimation()
             isVisible = false
         }
+    }
+
+    private fun areViewsOverlapping(view1: View, view2: View): Boolean {
+        val firstRect = Rect()
+        view1.getHitRect(firstRect)
+
+        val secondRect = Rect()
+        view2.getHitRect(secondRect)
+
+        return Rect.intersects(firstRect, secondRect)
     }
 
     override fun onDestroyView() {
