@@ -1,17 +1,21 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    app:showPaths="true"
+    app:layoutDescription="@xml/fragment_details_scene">
 
-    <ImageView
+    <androidx.constraintlayout.utils.widget.ImageFilterView
         android:id="@+id/iv_image"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:contentDescription="@string/image_of_pet"
         android:scaleType="centerCrop"
-        app:layout_constraintDimensionRatio="H,10:8"
+        app:layout_constraintDimensionRatio="H,1:1"
         app:layout_constraintTop_toTopOf="parent"
+        app:roundPercent="0"
         tools:src="@drawable/pet_adopt_image" />
 
     <ImageView
@@ -168,4 +172,4 @@
         android:layout_height="match_parent"
         app:constraint_referenced_ids="name, iv_image, scrollView" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>
