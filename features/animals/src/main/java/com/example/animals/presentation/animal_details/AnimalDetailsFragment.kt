@@ -27,8 +27,6 @@ import androidx.dynamicanimation.animation.SpringForce
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.airbnb.lottie.LottieProperty
 import com.airbnb.lottie.model.KeyPath
@@ -38,10 +36,8 @@ import com.example.animals.databinding.FragmentDetailsBinding
 import com.example.animals.presentation.animal_details.model.UIAnimalDetailed
 import com.example.common.utils.setImage
 import com.example.common.utils.toEmoji
-import com.example.common.utils.toEnglish
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AnimalDetailsFragment : Fragment() {

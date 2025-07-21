@@ -32,8 +32,6 @@ inline fun CoroutineScope.createExceptionHandler(
     }
 }
 
-fun Boolean.toEnglish() = if (this) "Yes" else "No"
-
 fun Context.dpToPx(dp: Float) = this.getResources().getDisplayMetrics().density * dp
 
 fun Paint.getTextWidth(string: String): Float {
