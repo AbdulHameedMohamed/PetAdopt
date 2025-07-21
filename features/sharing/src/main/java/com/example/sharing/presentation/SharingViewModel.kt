@@ -1,38 +1,44 @@
 package com.example.sharing.presentation
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.common.domain.usecases.GetAnimalDetailsUseCase
 import com.example.sharing.presentation.model.mapper.UiAnimalToShareMapper
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
+import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 class SharingViewModel @Inject constructor(
-    private val getAnimalDetails: GetAnimalDetailsUseCase,
-    private val uiAnimalToShareMapper: UiAnimalToShareMapper
-): ViewModel() {
+    private val getAnimalDetailsUseCase: GetAnimalDetailsUseCase,
+    private val uiAnimalToShareMapper: UiAnimalToShareMapper,
+    private val compositeDisposable: CompositeDisposable
+) : ViewModel() {
 
-  val viewState: StateFlow<SharingViewState> get() = _viewState
+    val viewState: StateFlow<SharingViewState> get() = _viewState
 
-  private val _viewState = MutableStateFlow(SharingViewState())
+    private val _viewState = MutableStateFlow(SharingViewState())
 
-  fun onEvent(event: SharingEvent) {
-    when (event) {
-      is SharingEvent.GetAnimalToShare -> getAnimalToShare(event.animalId)
+    fun onEvent(event: SharingEvent) {
+        when (event) {
+            is SharingEvent.GetAnimalToShare -> getAnimalToShare(event.animalId)
+        }
     }
-  }
 
-  private fun getAnimalToShare(animalId: Long) {
-    viewModelScope.launch {
-      val animal = getAnimalDetails(animalId)
-
-      _viewState.update { oldState ->
-        oldState.copy(animalToShare = uiAnimalToShareMapper.mapToView(animal))
-      }
+    private fun getAnimalToShare(animalId: Long) {
+        getAnimalDetailsUseCase(animalId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { _viewState.value = SharingViewState(uiAnimalToShareMapper.mapToView(it)) },
+                { onFailure(it) }
+            ).addTo(compositeDisposable)
     }
-  }
+
+    private fun onFailure(failure: Throwable) {
+
+    }
 }

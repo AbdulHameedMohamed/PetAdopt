@@ -6,6 +6,7 @@ import com.example.common.domain.model.animal.details.Age
 import com.example.common.domain.model.pagination.PaginatedAnimals
 import com.example.common.domain.model.search.SearchResults
 import io.reactivex.Flowable
+import io.reactivex.Single
 
 interface AnimalRepository {
     fun getAnimals(): Flowable<List<Animal>>
@@ -16,7 +17,7 @@ interface AnimalRepository {
 
     suspend fun storeAnimals(animals: List<Animal>)
 
-    suspend fun getAnimal(animalId: Long): Animal
+    fun getAnimal(animalId: Long): Single<Animal>
 
     suspend fun getAnimalTypes(): List<String>
 

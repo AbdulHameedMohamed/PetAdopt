@@ -18,6 +18,8 @@ class UiAnimalDetailsMapper @Inject constructor() : UiMapper<Animal, UIAnimalDet
             description = details.description,
             sprayNeutered = details.healthDetails.isSpayedOrNeutered,
             specialNeeds = details.healthDetails.hasSpecialNeeds,
+            declawed = details.healthDetails.isDeclawed,
+            shotsCurrent = details.healthDetails.shotsAreCurrent,
             tags = input.tags,
             phone = details.organization.contact.phone
         )

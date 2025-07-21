@@ -9,9 +9,11 @@ import com.example.common.utils.DispatchersProvider
 import com.example.sharing.presentation.SharingViewModel
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.Reusable
 import dagger.hilt.migration.DisableInstallInCheck
 import dagger.multibindings.IntoMap
+import io.reactivex.disposables.CompositeDisposable
 
 @Module
 @DisableInstallInCheck
@@ -37,4 +39,9 @@ abstract class SharingModule {
     abstract fun bindRepository(
         repository: PetFinderAnimalRepository
     ): AnimalRepository
+
+    companion object {
+        @Provides
+        fun provideCompositeDisposable() = CompositeDisposable()
+    }
 }

@@ -2,18 +2,16 @@ package com.example.common.domain.usecases
 
 import com.example.common.domain.model.animal.Animal
 import com.example.common.domain.repository.AnimalRepository
-import com.example.common.utils.DispatchersProvider
-import kotlinx.coroutines.withContext
+import io.reactivex.Single
 import javax.inject.Inject
 
 class GetAnimalDetailsUseCase @Inject constructor(
-    private val animalRepository: AnimalRepository,
-    private val dispatchersProvider: DispatchersProvider
+    private val animalRepository: AnimalRepository
 ) {
 
-  suspend operator fun invoke(animalId: Long): Animal {
-    return withContext(dispatchersProvider.io()) {
-        animalRepository.getAnimal(animalId)
+    operator fun invoke(
+        animalId: Long
+    ): Single<Animal> {
+        return animalRepository.getAnimal(animalId)
     }
-  }
 }

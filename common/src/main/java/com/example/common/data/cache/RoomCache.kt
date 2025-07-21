@@ -5,6 +5,7 @@ import com.example.common.data.cache.module.cachedorganization.CachedOrganizatio
 import com.example.common.data.cache.daos.AnimalsDao
 import com.example.common.data.cache.daos.OrganizationsDao
 import io.reactivex.Flowable
+import io.reactivex.Single
 import javax.inject.Inject
 
 class RoomCache @Inject constructor(
@@ -16,7 +17,7 @@ class RoomCache @Inject constructor(
         organizationsDao.insert(organizations)
     }
 
-    override suspend fun getOrganization(organizationId: String): CachedOrganization {
+    override fun getOrganization(organizationId: String): Single<CachedOrganization> {
         return organizationsDao.getOrganization(organizationId)
     }
 
@@ -28,7 +29,7 @@ class RoomCache @Inject constructor(
         animalsDao.insertAnimals(animals)
     }
 
-    override suspend fun getAnimal(animalId: Long): CachedAnimalAggregate {
+    override fun getAnimal(animalId: Long): Single<CachedAnimalAggregate> {
         return animalsDao.getAnimal(animalId)
     }
 

@@ -16,6 +16,7 @@ import com.example.common.domain.model.search.SearchParameters
 import com.example.common.domain.model.search.SearchResults
 import com.example.common.domain.model.animal.details.Age
 import io.reactivex.Flowable
+import io.reactivex.Single
 import retrofit2.HttpException
 import javax.inject.Inject
 
@@ -70,13 +71,15 @@ class PetFinderAnimalRepository @Inject constructor(
         cache.storeNearbyAnimals(animals.map { CachedAnimalAggregate.fromDomain(it) })
     }
 
-    override suspend fun getAnimal(animalId: Long): Animal {
-        val (animal, photos, videos, tags) = cache.getAnimal(animalId)
-        val organization = cache.getOrganization(animal.organizationId)
-
-        return animal.toDomain(photos, videos, tags, organization)
+    override fun getAnimal(animalId: Long): Single<Animal> {
+        return cache.getAnimal(animalId)
+            .flatMap { animal ->
+                cache.getOrganization(animal.animal.organizationId)
+                    .map {
+                        animal.animal.toDomain(animal.photos, animal.videos, animal.tags, it)
+                    }
+            }
     }
-
 
     override suspend fun getAnimalTypes(): List<String> {
         return cache.getAllTypes()

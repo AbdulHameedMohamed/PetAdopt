@@ -11,6 +11,7 @@ import com.example.common.data.cache.module.cachedanimal.CachedPhoto
 import com.example.common.data.cache.module.cachedanimal.CachedTag
 import com.example.common.data.cache.module.cachedanimal.CachedVideo
 import io.reactivex.Flowable
+import io.reactivex.Single
 
 @Dao
 abstract class AnimalsDao {
@@ -21,7 +22,9 @@ abstract class AnimalsDao {
 
     @Transaction
     @Query("SELECT * FROM animals WHERE animalId IS :animalId")
-    abstract suspend fun getAnimal(animalId: Long): CachedAnimalAggregate
+    abstract fun getAnimal(
+        animalId: Long
+    ): Single<CachedAnimalAggregate>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insertAnimalAggregate(

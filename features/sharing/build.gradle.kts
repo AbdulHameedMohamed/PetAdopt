@@ -48,4 +48,10 @@ dependencies {
     implementation(libs.google.dagger)
     ksp(libs.dagger.compiler)
 
+    // RXJava
+    implementation(libs.rx.java)
+    implementation(libs.rx.kotlin)
+    implementation(libs.rx.android)
+    implementation(libs.rx.room)
+
 }

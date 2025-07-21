@@ -37,6 +37,7 @@ import com.example.common.R.string.an_error_occurred
 import com.example.animals.databinding.FragmentDetailsBinding
 import com.example.animals.presentation.animal_details.model.UIAnimalDetailed
 import com.example.common.utils.setImage
+import com.example.common.utils.toEmoji
 import com.example.common.utils.toEnglish
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,8 +47,9 @@ import kotlinx.coroutines.launch
 class AnimalDetailsFragment : Fragment() {
 
     companion object {
-        const val FLING_SCALE = 1f
-        const val ANIMAL_ID = "id"
+        private const val FLING_SCALE = 1f
+        private const val ANIMAL_ID = "id"
+        private const val FLING_FRICTION = 2f
     }
 
     private val binding get() = _binding!!
@@ -75,8 +77,6 @@ class AnimalDetailsFragment : Fragment() {
             spring = springForce
         }
     }
-
-    private val FLING_FRICTION = 2f
 
     private val callFlingXAnimation: FlingAnimation by lazy {
         FlingAnimation(binding.btnCall, DynamicAnimation.X).apply {
@@ -149,36 +149,35 @@ class AnimalDetailsFragment : Fragment() {
     }
 
     private fun subscribeToStateUpdates() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.state.collect { state ->
-                    when (state) {
-                        is AnimalDetailsViewState.Loading -> {
-                            displayLoading()
-                        }
-
-                        is AnimalDetailsViewState.Failure -> {
-                            displayError()
-                        }
-
-                        is AnimalDetailsViewState.AnimalDetails -> {
-                            displayPetDetails(state.animal)
-                        }
-                    }
+        viewModel.state.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is AnimalDetailsViewState.Loading -> {
+                    displayLoading()
+                }
+                is AnimalDetailsViewState.Failure -> {
+                    displayError()
+                }
+                is AnimalDetailsViewState.AnimalDetails -> {
+                    displayPetDetails(state.animal, state.adopted)
                 }
             }
         }
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    private fun displayPetDetails(animalDetails: UIAnimalDetailed) {
+    private fun displayPetDetails(animalDetails: UIAnimalDetailed, isAdopted: Boolean) {
+        binding.btnCall.scaleX = 0.6f
+        binding.btnCall.scaleY = 0.6f
+        binding.btnCall.isVisible = true
         binding.group.isVisible = true
         stopAnimation()
         binding.name.text = animalDetails.name
         binding.description.text = animalDetails.description
         binding.ivImage.setImage(animalDetails.photo)
-        binding.tvSprayedNeutered.text = animalDetails.sprayNeutered.toEnglish()
-        binding.tvSpecialNeeds.text = animalDetails.specialNeeds.toEnglish()
+        binding.tvSprayedNeutered.text = animalDetails.sprayNeutered.toEmoji()
+        binding.tvSpecialNeeds.text = animalDetails.specialNeeds.toEmoji()
+        binding.declawed.text = animalDetails.declawed.toEmoji()
+        binding.shotsCurrent.text = animalDetails.shotsCurrent.toEmoji()
 
         val doubleTapGestureListener = object : GestureDetector.SimpleOnGestureListener() {
             override fun onDoubleTap(e: MotionEvent): Boolean {
@@ -227,6 +226,16 @@ class AnimalDetailsFragment : Fragment() {
                     findNavController().navigate(action)
                 }
             }
+        }
+
+        binding.btnAdopt.setOnClickListener {
+            binding.btnAdopt.startLoading()
+            viewModel.handleEvent(AnimalDetailsEvent.AdoptAnimal)
+        }
+
+        if (isAdopted) {
+            binding.btnAdopt.done()
+            binding.btnAdopt.setOnClickListener(null)
         }
     }
 

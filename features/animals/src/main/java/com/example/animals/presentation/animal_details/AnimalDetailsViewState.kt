@@ -3,11 +3,12 @@ package com.example.animals.presentation.animal_details
 import com.example.animals.presentation.animal_details.model.UIAnimalDetailed
 
 sealed class AnimalDetailsViewState {
-    object Loading : AnimalDetailsViewState()
+    data object Loading : AnimalDetailsViewState()
 
     data class AnimalDetails(
-        val animal: UIAnimalDetailed
+        val animal: UIAnimalDetailed,
+        val adopted: Boolean = false
     ) : AnimalDetailsViewState()
 
-    object Failure : AnimalDetailsViewState()
+    data object Failure : AnimalDetailsViewState()
 }
